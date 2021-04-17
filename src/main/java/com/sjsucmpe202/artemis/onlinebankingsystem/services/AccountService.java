@@ -1,6 +1,10 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.services;
 
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.*;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.Account;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.CheckingsAccount;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.SavingsAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,15 +29,14 @@ public class AccountService {
             } else {
                 throw new Exception("Invalid Account Type");
             }
-
-            bankAccount.setAccountFee(bankAccount.getBankAccountFee());
-            bankAccount.setMinimumBalance(bankAccount.getBankAccountMinimumBalance());
-            bankAccount.setAccountType(bankAccount.getBankAccountType());
-            bankAccount.setInterestRate(bankAccount.getBankAccountInterestRate());
-            bankAccount.setAccountInfo(bankAccount.getBankAccountInformation());
-            bankAccount.setAccountNumber(account.getAccountNumber());
-            bankAccount.setAccountBalance(account.getAccountBalance());
-            bankAccount.setAccountRoutingNumber(account.getAccountRoutingNumber());
+                bankAccount.setAccountFee(bankAccount.getBankAccountFee());
+                bankAccount.setMinimumBalance(bankAccount.getBankAccountMinimumBalance());
+                bankAccount.setAccountType(bankAccount.getBankAccountType());
+                bankAccount.setInterestRate(bankAccount.getBankAccountInterestRate());
+                bankAccount.setAccountInfo(bankAccount.getBankAccountInformation());
+                bankAccount.setAccountNumber(account.getAccountNumber());
+                bankAccount.setAccountBalance(account.getAccountBalance());
+                bankAccount.setAccountRoutingNumber(account.getAccountRoutingNumber());
 
             return accountRepository.save(bankAccount);
         }catch(Exception e){
