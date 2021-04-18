@@ -27,6 +27,15 @@ public class TransactionService {
         String toAccountNumber = transferBalanceRequest.getToAccountNumber();
         BigDecimal amount = transferBalanceRequest.getAmount();
         
+        //check if fromAccountNumber is valid/existing or not
+        
+        //check if toAccountNumber is valid/existing or not
+        
+        //subtract the amount from fromAccountNumber and add the amount to toAccountNumber
+        
+        //update both the accounts
+        
+        //persist a transaction entry
         transaction.setId(UUID.randomUUID().toString());
         transaction.setAccountNumber(fromAccountNumber);
         transaction.setTransactionAmount(amount);
@@ -34,5 +43,7 @@ public class TransactionService {
         transaction = transactionRepository.save(transaction);
         return transaction;
 	}
+	
+	//Method to get the transaction history (to view for transactions)
 
 }
