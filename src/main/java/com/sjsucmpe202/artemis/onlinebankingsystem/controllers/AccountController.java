@@ -4,6 +4,8 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.AccountDTO;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +21,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public BankAccount createNewAccount(@RequestBody AccountDTO account){
+    public BankAccount createNewAccount(@RequestBody AccountDTO account) {
         return accountService.startAccount(account);
     }
 }

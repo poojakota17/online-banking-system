@@ -1,7 +1,6 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.services;
 
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.*;
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.Account;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.CheckingsAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.SavingsAccount;
