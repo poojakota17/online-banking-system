@@ -21,8 +21,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createNewAccount(@RequestBody AccountDTO account){
-        BankAccount bankAccount = accountService.startAccount(account);
-        return new ResponseEntity<BankAccount>(bankAccount, HttpStatus.CREATED);
+    public BankAccount createNewAccount(@RequestBody AccountDTO account){
+        return accountService.startAccount(account);
     }
 }
