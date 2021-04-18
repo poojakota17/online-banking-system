@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.Data;
 
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,9 +13,7 @@ import java.util.Date;
         @JsonSubTypes.Type(CheckingsAccount.class),
         @JsonSubTypes.Type(SavingsAccount.class) }
 )
-
 @Data
-
 @Entity
 public abstract class BankAccount {
 
@@ -45,86 +42,6 @@ public abstract class BankAccount {
     public abstract String getBankAccountInformation();
 
     public BankAccount() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public Date getAccountOpenDate() {
-        return accountOpenDate;
-    }
-
-    public void setAccountOpenDate(Date accountOpenDate) {
-        this.accountOpenDate = accountOpenDate;
-    }
-
-    public Double getAccountBalance() {
-        return accountBalance;
-    }
-
-    public void setAccountBalance(Double accountBalance) {
-        this.accountBalance = accountBalance;
-    }
-
-    public Long getAccountRoutingNumber() {
-        return accountRoutingNumber;
-    }
-
-    public void setAccountRoutingNumber(Long accountRoutingNumber) {
-        this.accountRoutingNumber = accountRoutingNumber;
-    }
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
-    public String getAccountInfo() {
-        return accountInfo;
-    }
-
-    public void setAccountInfo(String accountInfo) {
-        this.accountInfo = accountInfo;
-    }
-
-    public Double getMinimumBalance() {
-        return minimumBalance;
-    }
-
-    public void setMinimumBalance(Double minimumBalance) {
-        this.minimumBalance = minimumBalance;
-    }
-
-    public Double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(Double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public Double getAccountFee() {
-        return accountFee;
-    }
-
-    public void setAccountFee(Double accountFee) {
-        this.accountFee = accountFee;
     }
 
     @PrePersist
