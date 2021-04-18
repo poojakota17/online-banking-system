@@ -1,9 +1,6 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.services;
 
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.Account;
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.CheckingsAccount;
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.SavingsAccount;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.*;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,18 +8,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountService {
 
-    @Autowired
     private AccountRepository accountRepository;
 
-    public BankAccount startAccount(Account account){
+    @Autowired
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    public BankAccount startAccount(AccountDTO account){
         BankAccount bankAccount = null;
         try{
-            if (account.getAccountType().equals("C")){
+            if (account.getAccountType().toUpperCase().equals(AccountType.CHECKINGSACCOUNT.toString())){
                 bankAccount = new CheckingsAccount();
-            } else if (account.getAccountType().equals("S")) {
+            } else if (account.getAccountType().toUpperCase().equals(AccountType.SAVINGSACCOUNT.toString())) {
                 bankAccount = new SavingsAccount();
             } else {
-                System.out.println("Invalid type");
+                throw new Exception("Invalid Account Type");
             }
 
             bankAccount.setAccountFee(bankAccount.getBankAccountFee());

@@ -24,7 +24,7 @@ public class CheckingsAccount extends BankAccount{
 
     @Override
     public String getBankAccountType() {
-        return "Checkings Account";
+        return AccountType.CHECKINGSACCOUNT.toString();
     }
 
     @Override

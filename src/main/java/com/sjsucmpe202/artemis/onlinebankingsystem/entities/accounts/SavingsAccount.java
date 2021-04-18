@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class SavingsAccount extends BankAccount{
+
     @Override
     public Double getBankAccountFee() {
         return 500.0;
@@ -21,7 +22,7 @@ public class SavingsAccount extends BankAccount{
 
     @Override
     public String getBankAccountType() {
-        return "Savings Account";
+        return AccountType.SAVINGSACCOUNT.toString();
     }
 
     @Override
