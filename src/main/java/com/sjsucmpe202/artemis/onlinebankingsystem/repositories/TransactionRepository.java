@@ -8,6 +8,4 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, String> {
 
-	Transaction save(Transaction transaction);
-
 }
