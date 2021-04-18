@@ -18,7 +18,7 @@ public class TransactionService {
 		this.transactionRepository = transactionRepository;
 	}
 
-	public Transaction sendMoney(Transaction transaction) {
+	public Transaction save(Transaction transaction) {
 
 		transaction.setId(UUID.randomUUID().toString());
 

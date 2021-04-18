@@ -24,7 +24,7 @@ public class TransactionController {
 	@PostMapping
 	public Transaction sendMoney(Transaction transaction) {
 
-		return transactionService.sendMoney(transaction);
+		return transactionService.save(transaction);
 	}
 
 }
