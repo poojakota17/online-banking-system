@@ -33,7 +33,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/remove/{customerId}/{accountId}")
-    public void deleteExistingAccount(@PathVariable String customerId, @PathVariable Long accountId){
+    public void deleteExistingAccount(@PathVariable String customerId, @PathVariable String accountId){
         accountService.deleteAccount(customerId,accountId);
     }
 }

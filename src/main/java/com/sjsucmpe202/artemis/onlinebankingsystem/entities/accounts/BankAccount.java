@@ -28,14 +28,13 @@ public abstract class BankAccount {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(updatable = false,unique = true)
     private Long accountNumber;
 
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date accountOpenDate;
 
     private Double accountBalance;

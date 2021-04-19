@@ -8,6 +8,9 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepositor
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+import java.util.UUID;
+
 @Service
 public class AccountService {
 
@@ -34,12 +37,13 @@ public class AccountService {
                 throw new Exception("Invalid Account Type");
             }
 
+            bankAccount.setId(UUID.randomUUID().toString());
             bankAccount.setAccountFee(bankAccount.getBankAccountFee());
             bankAccount.setMinimumBalance(bankAccount.getBankAccountMinimumBalance());
             bankAccount.setAccountType(bankAccount.getBankAccountType());
             bankAccount.setInterestRate(bankAccount.getBankAccountInterestRate());
             bankAccount.setAccountInfo(bankAccount.getBankAccountInformation());
-            bankAccount.setAccountNumber(account.getAccountNumber());
+            bankAccount.setAccountNumber(Math.abs(new Random().nextLong()));
             bankAccount.setAccountBalance(account.getAccountBalance());
             bankAccount.setAccountRoutingNumber(account.getAccountRoutingNumber());
             BankAccount bankAccountInstance = bankAccount;
@@ -59,7 +63,7 @@ public class AccountService {
         return accountRepository.findByCustomerId(customerId);
     }
 
-    public void deleteAccount(String customerId, Long accountId) {
+    public void deleteAccount(String customerId, String accountId) {
         try{
             BankAccount account = accountRepository.findByIdAndCustomerId(accountId,customerId);
             if(account == null){
