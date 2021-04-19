@@ -4,8 +4,6 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.AccountDTO;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,9 +17,23 @@ public class AccountController {
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
+    @GetMapping("/all")
+    public Iterable<BankAccount> getAllAccounts(){
+        return accountService.findAllAccounts();
+    }
 
-    @PostMapping
-    public BankAccount createNewAccount(@RequestBody AccountDTO account) {
-        return accountService.startAccount(account);
+    @GetMapping("/{customerId}/accounts")
+    public Iterable<BankAccount> getAccountsByCustomerId(@PathVariable String customerId){
+            return accountService.getAccountsByCustomerId(customerId);
+    }
+
+    @PostMapping("/new/{customerId}")
+    public BankAccount createNewAccount(@PathVariable String customerId, @RequestBody AccountDTO account){
+        return accountService.startAccount(customerId , account);
+    }
+
+    @DeleteMapping("/remove/{customerId}/{accountId}")
+    public void deleteExistingAccount(@PathVariable String customerId, @PathVariable Long accountId){
+        accountService.deleteAccount(customerId,accountId);
     }
 }
