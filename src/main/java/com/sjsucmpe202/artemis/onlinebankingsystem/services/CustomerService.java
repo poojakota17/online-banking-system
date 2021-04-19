@@ -21,4 +21,9 @@ public class CustomerService {
         customer.setId(UUID.randomUUID().toString());
         return customerRepository.save(customer);
     }
+
+    public void delete(String customerId){
+        Customer customer = customerRepository.findById(customerId).get();
+        customerRepository.delete(customer);
+    }
 }

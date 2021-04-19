@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Customer;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -12,7 +13,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSubTypes({
@@ -37,7 +40,7 @@ public abstract class BankAccount {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date accountOpenDate;
 
-    private Double accountBalance;
+    private BigDecimal accountBalance;
     private Long accountRoutingNumber;
     private String accountType;
     private String accountInfo;

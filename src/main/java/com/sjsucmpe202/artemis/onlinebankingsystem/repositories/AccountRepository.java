@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface AccountRepository extends CrudRepository<BankAccount, Long> {
+public interface AccountRepository extends CrudRepository<BankAccount, String> {
     Iterable<BankAccount> findByCustomerId(String customerId);
     BankAccount findByIdAndCustomerId (String id, String customerId);
 }

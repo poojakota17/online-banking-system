@@ -1,10 +1,7 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionService;
@@ -21,10 +18,14 @@ public class TransactionController {
 		this.transactionService = transactionService;
 	}
 
-	@PostMapping
-	public Transaction sendMoney(Transaction transaction) {
+	@PostMapping("/{accountId}")
+	public Transaction save(@RequestBody Transaction transaction, @PathVariable String accountId) {
+		return transactionService.save(transaction, accountId);
+	}
 
-		return transactionService.save(transaction);
+	@GetMapping("/{accountId}")
+	public Iterable<Transaction> getAllTransactionsFromAccountId(@PathVariable String accountId){
+		return transactionService.findAllTransactionsByAccountId(accountId);
 	}
 
 }

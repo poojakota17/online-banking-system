@@ -1,4 +1,4 @@
-package com.sjsucmpe202.artemis.onlinebankingsystem.model;
+package com.sjsucmpe202.artemis.onlinebankingsystem.enums;
 
 public enum OperationsType {
 	

@@ -2,14 +2,18 @@ package com.sjsucmpe202.artemis.onlinebankingsystem.entities;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
-import com.sjsucmpe202.artemis.onlinebankingsystem.model.OperationsType;
-import com.sjsucmpe202.artemis.onlinebankingsystem.model.TransactionType;
+import com.sjsucmpe202.artemis.onlinebankingsystem.enums.OperationsType;
+import com.sjsucmpe202.artemis.onlinebankingsystem.enums.TransactionType;
 
 import lombok.Data;
 
@@ -19,7 +23,6 @@ public class Transaction {
 	
 	@Id
 	String id;
-	//onetomany for accounts
 	String memo;
 	BigDecimal runningBalance;
 	OperationsType operationsType;
@@ -27,4 +30,10 @@ public class Transaction {
 	BigDecimal transactionAmount;
 	@CreatedDate
 	Date transactionDateTime;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "account_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private BankAccount bankAccount;
 }

@@ -3,10 +3,7 @@ package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Customer;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -21,7 +18,12 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer save(Customer customer){
+    public Customer save(@RequestBody Customer customer){
         return customerService.save(customer);
+    }
+
+    @DeleteMapping("/{customerId}")
+    public void delete(@PathVariable String customerId){
+        customerService.delete(customerId);
     }
 }

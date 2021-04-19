@@ -7,5 +7,5 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, String> {
-
+        Iterable<Transaction> findAllByBankAccountId(String accountId);
 }
