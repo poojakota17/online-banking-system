@@ -1,8 +1,6 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.services;
 
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.AccountDTO;
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.SavingsAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.CustomerRepository;
 import org.junit.Test;
@@ -12,8 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Random;
-import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
