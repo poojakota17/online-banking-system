@@ -2,10 +2,8 @@ package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.RefundRequests;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.RefundService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 @RestController
 @CrossOrigin
@@ -17,6 +15,11 @@ public class AdminTransactionController {
    @GetMapping
     public List<RefundRequests> getRefundRequestsLists(){
         return refundService.getRefundRequestsList();
+    }
+
+    @PostMapping
+    public void addRequests(@RequestBody RefundRequests refundRequests){
+       refundService.addRefundRequests(refundRequests);
     }
 
 }
