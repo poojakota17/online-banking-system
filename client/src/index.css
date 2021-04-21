@@ -11,3 +11,172 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+a{
+  text-decoration: none !important;
+  color: gray !important;
+}
+.pageHeader{
+  border: solid #adadad 1px;
+  width:100%;
+  height:85px;
+  background-color: #adadad;
+}
+.rightPage{
+  width:100%;
+  height:100%;
+}
+.center{
+  text-align: center;
+}
+.alignRight{
+  margin-left:300px;
+}
+.tables{
+  width:65% !important;
+}
+.loginForm{
+  width:400px;
+  margin-left: 35%;
+  border: solid gray 2px;
+  padding:50px;
+  border-radius: 5%;
+}
+.signupForm{
+  width:500px;
+
+  border: solid gray 2px;
+  padding:50px;
+  border-radius: 5%;
+  margin-left: 31%;
+  margin-bottom: 10px;;
+}
+.loginPage{
+  margin-top: 75px;
+  text-align: center;
+}
+.middle{
+
+  width:80%;
+  height:50%;
+}
+.card-deck{
+  text-align: center;
+}
+.mainHome{
+  margin-top: 25px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+.formTitle{
+  color: grey;
+}
+.logoSize{
+  width:50px;
+  height:50px;
+}
+.imagesize {
+  max-height: 12rem;
+  max-width: 20rem;
+  /*width:50px;
+  height: 50px;*/
+}
+.searchBoxHolder{
+  margin-top: 50px;
+  text-align: center;
+}
+.search-class{
+  width:65%;
+}
+.homePageCardColumn{
+  margin-left:15%;
+  margin-top:10px;
+}
+
+.pagination {
+  margin: 15px auto;
+  display: flex;
+  list-style: none;
+  outline: none;
+}
+.pagination > .active > a{
+  background-color: #47ccde ;
+  border-color: #47ccde ;
+  color: #fff;
+}
+.pagination > li > a{
+  border: 1px solid #47ccde ;
+  padding: 5px 10px;
+  outline: none;
+  cursor: pointer;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+  background-color: #47ccde ;
+  border-color: #47ccde;
+  outline: none ;
+}
+.pagination > li > a, .pagination > li > span{
+  color: #47ccde
+}
+.pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span{
+  border-radius: unset
+}
+.tableContainer{
+  height:100%;
+  width:70%;
+  margin-left:300px;
+  margin-top:50px;
+}
+.modalOverlap{
+  z-index:4;
+}
+.appointmentDiv{
+  margin-left:300px;
+  margin-top:50px;
+  height:100%;
+
+}
+
+.wrapper{
+  width:65.5%;
+  margin-left:331px;
+  height: 450px;
+  overflow: auto;
+ }
+ .wrapperNew{
+  height: 450px;
+  overflow: auto;
+ }
+ ul{
+  list-style:none;
+ }
+
+ .info{
+   border-bottom:solid lightgray 1px;
+   border-left:solid lightgray 1px;
+   border-right:solid lightgray 1px;
+ }
+ .profile-details{
+   width:70%;
+   margin-left:310px;
+   margin-top:40px;
+ }
+ .marqueeDiv{
+    width: 100%;
+    height:40px;
+    white-space: nowrap;
+    background-color:#00004d;
+    color: white;
+    font-weight: 900;
+    font-size:25px;
+    margin-bottom: 25px;
+    font-family: Garamond, serif;
+    
+ }
+ .tab{
+ margin-left:65px;
+ }
+
+ .padding{
+   margin-top:25px;
+ }
