@@ -22,14 +22,14 @@ import lombok.Data;
 public class Transaction {
 	
 	@Id
-	String id;
-	String memo;
-	BigDecimal runningBalance;
-	OperationsType operationsType;
-	TransactionType transactionType;
-	BigDecimal transactionAmount;
+	private String id;
+	private String memo;
+	private BigDecimal runningBalance;
+	private OperationsType operationsType;
+	private TransactionType transactionType;
+	private BigDecimal transactionAmount;
 	@CreatedDate
-	Date transactionDateTime;
+	private Date transactionDateTime;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "account_id", nullable = false)
