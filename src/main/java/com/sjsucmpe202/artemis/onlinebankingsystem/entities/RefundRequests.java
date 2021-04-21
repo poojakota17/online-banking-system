@@ -17,5 +17,5 @@ public class RefundRequests {
     String lastName;
     Long accountNumber;
     String reason;
-
+    String status;
 }
