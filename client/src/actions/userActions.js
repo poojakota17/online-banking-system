@@ -5,7 +5,7 @@ import {
 
 export const saveUser = (newUser) => async (dispatch) => {
   const res = await axios.post(
-    "http://localhost:8080/api/user",
+    process.env.REACT_APP_URL + `/api/user`,
     newUser
   );
   dispatch({ type: GET_USER, payload: res.data });

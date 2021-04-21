@@ -18,7 +18,6 @@ public class CustomerService {
     }
 
     public Customer save(Customer customer){
-        customer.setId(UUID.randomUUID().toString());
         return customerRepository.save(customer);
     }
 
