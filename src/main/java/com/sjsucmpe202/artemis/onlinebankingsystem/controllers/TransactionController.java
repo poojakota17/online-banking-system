@@ -36,4 +36,9 @@ public class TransactionController {
 	public TransactionTemplate save(@RequestBody TransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam String toAccountNumber){
 		return templateService.save(transactionTemplate, fromAccountId, toAccountNumber);
 	}
+
+	@PostMapping("/one_time")
+	public void saveOneTimeTransaction(@RequestBody TransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam Long toAccountNumber){
+		transactionService.saveOnetimeTransaction(transactionTemplate, fromAccountId, toAccountNumber);
+	}
 }

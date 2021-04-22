@@ -4,6 +4,7 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.TransactionTemplate;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.TransactionType;
+import com.sjsucmpe202.artemis.onlinebankingsystem.mappers.TransactionMapper;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ public class TransactionService {
 
 	private TransactionRepository transactionRepository;
 	private AccountRepository accountRepository;
+	private TransactionMapper transactionMapper;
 
 	@Autowired
-	public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository) {
+	public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, TransactionMapper transactionMapper) {
 		this.transactionRepository = transactionRepository;
 		this.accountRepository = accountRepository;
+		this.transactionMapper = transactionMapper;
 	}
 
 	@Transactional
@@ -47,6 +50,16 @@ public class TransactionService {
 
 	public Iterable<Transaction> findAllTransactionsByAccountId(String accountId){
 		return transactionRepository.findAllByBankAccountId(accountId);
+	}
+
+	public void saveOnetimeTransaction(TransactionTemplate transactionTemplate, String fromAccountId, Long toAccountNumber){
+		BankAccount fromAccount = accountRepository.findById(fromAccountId).get();
+		BankAccount toAccount = accountRepository.findByAccountNumber(toAccountNumber);
+		//Create TXN
+		Transaction fromTxn = transactionMapper.toTransactionDTOForFromAccount(transactionTemplate);
+		Transaction toTxn = transactionMapper.toTransactionDTOForToAccount(transactionTemplate);
+		save(fromTxn, fromAccount.getId());
+		save(toTxn, toAccount.getId());
 	}
 
 }
