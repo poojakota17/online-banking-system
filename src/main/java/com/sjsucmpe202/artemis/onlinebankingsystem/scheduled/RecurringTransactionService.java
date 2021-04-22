@@ -10,6 +10,7 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class RecurringTransactionService {
     }
 
     @Scheduled(cron = "0 0 0 * * *", zone = "America/Los_Angeles")
+    @Transactional
     public void createRecurringTransaction() {
         //Get the list of transaction templates for the current date
         Iterable<TransactionTemplate> transactionTemplates = transactionTemplateRepository.findAllByNextTriggerDateEquals(LocalDate.now());

@@ -9,8 +9,8 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepositor
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -52,7 +52,8 @@ public class TransactionService {
 		return transactionRepository.findAllByBankAccountId(accountId);
 	}
 
-	public void saveOnetimeTransaction(TransactionTemplate transactionTemplate, String fromAccountId, Long toAccountNumber){
+	@Transactional
+	public void saveOnetimeTransaction(TransactionTemplate transactionTemplate, String fromAccountId, String toAccountNumber){
 		BankAccount fromAccount = accountRepository.findById(fromAccountId).get();
 		BankAccount toAccount = accountRepository.findByAccountNumber(toAccountNumber);
 		//Create TXN
