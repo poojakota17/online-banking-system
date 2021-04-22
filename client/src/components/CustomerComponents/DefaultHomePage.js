@@ -18,7 +18,7 @@ class DefaultHomePage extends Component {
     return (
       <div>
         <header className="pageHeader">
-          <h5 className="center">H O M E   {"   "}P A G E</h5>
+          <h5 className="center">H O M E &nbsp;P A G E</h5>
         </header>
         <Container>
         <div className="homePageCardColumn">
