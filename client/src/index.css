@@ -135,7 +135,9 @@ a{
   height:100%;
 
 }
-
+.marginBuffer{
+  margin-left:331px;
+}
 .wrapper{
   width:65.5%;
   margin-left:331px;
