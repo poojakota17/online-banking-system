@@ -63,6 +63,10 @@ public class AccountService {
         return accountRepository.findByCustomerId(customerId);
     }
 
+    public BankAccount findAccountByAccountNumber(Long accountNumber){
+        return accountRepository.findByAccountNumber(accountNumber);
+    }
+
     public void deleteAccount(String customerId, String accountId) {
         try{
             BankAccount account = accountRepository.findByIdAndCustomerId(accountId,customerId);

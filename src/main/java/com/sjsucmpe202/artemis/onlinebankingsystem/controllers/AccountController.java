@@ -27,6 +27,10 @@ public class AccountController {
             return accountService.getAccountsByCustomerId(customerId);
     }
 
+    @GetMapping("/{accountnumber}")
+    public BankAccount getAccountByAccountnumber(@PathVariable String accountnumber){
+        return accountService.findAccountByAccountNumber(Long.parseLong(accountnumber));
+    }
     @PostMapping("/new/{customerId}")
     public BankAccount createNewAccount(@PathVariable String customerId, @RequestBody AccountDTO account){
         return accountService.startAccount(customerId , account);
