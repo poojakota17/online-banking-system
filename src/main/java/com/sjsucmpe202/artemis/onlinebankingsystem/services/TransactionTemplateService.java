@@ -29,7 +29,7 @@ public class TransactionTemplateService {
         this.transactionService = transactionService;
     }
 
-    public TransactionTemplate save(TransactionTemplate transactionTemplate, String fromAccountId, Long toAccountNumber){
+    public TransactionTemplate save(TransactionTemplate transactionTemplate, String fromAccountId, String toAccountNumber){
         transactionTemplate.setTxn_template_id(UUID.randomUUID().toString());
         BankAccount fromAccount = accountRepository.findById(fromAccountId).get();
         BankAccount toAccount = accountRepository.findByAccountNumber(toAccountNumber);

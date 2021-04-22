@@ -11,10 +11,10 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    private Long accountNumber;
+    private String accountNumber;
     private Date accountOpenDate;
     private BigDecimal accountBalance;
-    private Long accountRoutingNumber;
+    private String accountRoutingNumber;
     private String accountType;
     private String accountInfo;
     private Double minimumBalance;

@@ -33,7 +33,7 @@ public class TransactionController {
 	}
 
 	@PostMapping
-	public TransactionTemplate save(@RequestBody TransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam Long toAccountNumber){
+	public TransactionTemplate save(@RequestBody TransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam String toAccountNumber){
 		return templateService.save(transactionTemplate, fromAccountId, toAccountNumber);
 	}
 }

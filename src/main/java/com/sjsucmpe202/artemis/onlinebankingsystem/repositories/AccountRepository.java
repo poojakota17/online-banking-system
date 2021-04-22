@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends CrudRepository<BankAccount, String> {
     Iterable<BankAccount> findByCustomerId(String customerId);
     BankAccount findByIdAndCustomerId (String id, String customerId);
-    BankAccount findByAccountNumber(Long AccountNumber);
+    BankAccount findByAccountNumber(String AccountNumber);
 }

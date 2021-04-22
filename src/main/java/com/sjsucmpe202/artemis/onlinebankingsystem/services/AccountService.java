@@ -43,7 +43,7 @@ public class AccountService {
             bankAccount.setAccountType(bankAccount.getBankAccountType());
             bankAccount.setInterestRate(bankAccount.getBankAccountInterestRate());
             bankAccount.setAccountInfo(bankAccount.getBankAccountInformation());
-            bankAccount.setAccountNumber(Math.abs(new Random().nextLong()));
+            bankAccount.setAccountNumber(String.valueOf(Math.abs(new Random().nextLong())));
             bankAccount.setAccountBalance(account.getAccountBalance());
             bankAccount.setAccountRoutingNumber(account.getAccountRoutingNumber());
             BankAccount bankAccountInstance = bankAccount;
@@ -63,7 +63,7 @@ public class AccountService {
         return accountRepository.findByCustomerId(customerId);
     }
 
-    public BankAccount findAccountByAccountNumber(Long accountNumber){
+    public BankAccount findAccountByAccountNumber(String accountNumber){
         return accountRepository.findByAccountNumber(accountNumber);
     }
 

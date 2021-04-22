@@ -38,7 +38,7 @@ public class AccountServiceTest {
     public void startAccountTest(){
         AccountDTO account = new AccountDTO();
         account.setAccountType("SAVINGSACCOUNT");
-        account.setAccountRoutingNumber(123212431254L);
+        account.setAccountRoutingNumber("123212431254L");
         accountService.startAccount("aswe-aswert-wertyu-dggh",account);
         Mockito.verify(customerRepository, Mockito.times(1)).findById("aswe-aswert-wertyu-dggh");
     }

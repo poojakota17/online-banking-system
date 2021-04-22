@@ -34,14 +34,14 @@ public abstract class BankAccount {
     private String id;
 
     @Column(updatable = false,unique = true)
-    private Long accountNumber;
+    private String accountNumber;
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date accountOpenDate;
 
     private BigDecimal accountBalance;
-    private Long accountRoutingNumber;
+    private String accountRoutingNumber;
     private String accountType;
     private String accountInfo;
     private Double minimumBalance;
