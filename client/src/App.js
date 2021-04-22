@@ -5,7 +5,7 @@ import MainHomePage from './components/MainHomePage';
 import CustomerLogin from './components/CustomerLogin';
 import BankerLogin from './components/BankerLogin';
 import CustomerHomePage from './components/CustomerComponents/CustomerHomePage';
-import BankerDashboard from './components/BankerDashboard';
+import BankerDashboard from './components/BankerComponents/BankerDashboard';
 import { Account } from "./Account";
 import { Provider } from "react-redux";
 import store from "./store";
