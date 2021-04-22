@@ -45,7 +45,6 @@ function LoginComponent(props) {
 
         <h1>ABC Bank</h1>
       </div>
-
       {signup ? (
         <div>
           <SignUpComponent groupname={props.user} />
@@ -85,16 +84,16 @@ function LoginComponent(props) {
               />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+              LOGIN
             </Button>
             <br />
             <br />
-            
+            {props.user === "CustomerGroup" ? null :(
             <Button variant="secondary" size="sm" onClick={showSignUp}>
               Sign Up
-            </Button>{" "}
+            </Button>)}
             <Link to="/" className="navbar-logo">
-              <Button variant="secondary" size="sm">
+              {" "}<Button variant="secondary" size="sm">
                 Back to Home
               </Button>
             </Link>

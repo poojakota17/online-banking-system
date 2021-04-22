@@ -14,13 +14,12 @@ code {
 
 a{
   text-decoration: none !important;
-  color: gray !important;
+  color: rgb(49, 47, 47) !important;
 }
 .pageHeader{
-  border: solid #adadad 1px;
   width:100%;
-  height:85px;
-  background-color: #adadad;
+  height:47px;
+  background-color: #d8d7d4;
 }
 .rightPage{
   width:100%;
@@ -180,3 +179,8 @@ a{
  .padding{
    margin-top:25px;
  }
+ .leftSideBar{
+  float:left;
+  height: 700px;
+}
+

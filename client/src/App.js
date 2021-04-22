@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainHomePage from './components/MainHomePage';
 import CustomerLogin from './components/CustomerLogin';
 import BankerLogin from './components/BankerLogin';
-import CustomerDashboard from './components/CustomerDashboard';
+import CustomerHomePage from './components/CustomerComponents/CustomerHomePage';
 import BankerDashboard from './components/BankerDashboard';
 import { Account } from "./Account";
 import { Provider } from "react-redux";
@@ -20,7 +20,7 @@ function App() {
           <Route path="/" exact component={MainHomePage} />
           <Route path="/customerlogin"  component={CustomerLogin} />
           <Route path="/bankerlogin" component={BankerLogin} />
-          <Route path="/customerhome" component={CustomerDashboard} />
+          <Route path="/customerhome" component={CustomerHomePage} />
           <Route path="/bankerhome" component={BankerDashboard} />
         </Switch>
       </Account>

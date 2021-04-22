@@ -10,3 +10,11 @@ export const saveUser = (newUser) => async (dispatch) => {
   );
   dispatch({ type: GET_USER, payload: res.data });
 };
+
+export const getUser = (userId) => async (dispatch) => {
+  const res = await axios.get(
+    process.env.REACT_APP_URL + `/api/user/${userId}`
+  );
+  console.log(res);
+  dispatch({ type: GET_USER, payload: res.data });
+};

@@ -14,6 +14,10 @@ function SignUpComponent(props) {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [dob, setDob] = useState("");
+  const [ssn, setSsn] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [shows, setShows] = useState(false);
 
   var dataFirstName = {
@@ -51,6 +55,10 @@ function SignUpComponent(props) {
         setEmail("");
         setFirstname("");
         setLastname("");
+        setAddress("");
+        setDob("");
+        setSsn("");
+        setPhoneNumber("");
         console.log(data);
 
 
@@ -58,28 +66,28 @@ function SignUpComponent(props) {
           let user = {
           
             id: data.userSub,
-            address : "Address",
+            address : address,
             customerType : "CUSTOMER",
-            dob : "2021-04-20",
+            dob : dob,
             email : email,
             firstName: firstname,
             lastName: lastname,
-            phoneNumber: "213213213",
-            ssn: "213-987-9876"
+            phoneNumber: phoneNumber,
+            ssn: ssn
           }
         props.saveUser(user);
         } else if (props.groupname === "BankerGroup") {
           let user = {
           
             id: data.userSub,
-            address : "Address",
+            address : address,
             customerType : "BANKER",
-            dob : "2021-04-20",
+            dob : dob,
             email : email,
             firstName: firstname,
             lastName: lastname,
-            phoneNumber: "213213213",
-            ssn: "213-987-9876"
+            phoneNumber: phoneNumber,
+            ssn: ssn
           }
         props.saveUser(user);
         }
@@ -114,6 +122,60 @@ function SignUpComponent(props) {
             />
           </Form.Group>
         </Form.Row>
+
+      {props.groupname === "CustomerGroup" ? (
+        <>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formfirstname">
+            <Form.Label>DOB</Form.Label>
+
+            <Form.Control
+              required
+              type="text"
+              placeholder="YYYY-MM-DD"
+              value={dob}
+              onChange={(event) => setDob(event.target.value)}
+            />
+          </Form.Group>
+          <Form.Group as={Col} controlId="formlastname">
+            <Form.Label>SSN</Form.Label>
+
+            <Form.Control
+              required
+              type="text"
+              placeholder="Enter SSN"
+              value={ssn}
+              onChange={(event) => setSsn(event.target.value)}
+            />
+          </Form.Group>
+          <Form.Group as={Col} controlId="formPhoneNumber">
+            <Form.Label>Phone Number</Form.Label>
+
+            <Form.Control
+              required
+              type="text"
+              placeholder="Enter Phone Number"
+              value={phoneNumber}
+              onChange={(event) => setPhoneNumber(event.target.value)}
+            />
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formAddress">
+            <Form.Label>Address </Form.Label>
+
+            <Form.Control
+              required
+              type="text"
+              placeholder="Enter Address"
+              value={address}
+              onChange={(event) => setAddress(event.target.value)}
+            />
+          </Form.Group>
+        </Form.Row>
+        </>) : null}
+
+
         <Form.Row>
           <Form.Group as={Col} controlId="formBasicEmail">
             <Form.Label>Email</Form.Label>
