@@ -12,6 +12,7 @@ public class RefundRequests {
     @Id
 
     String requestId;
+    String id;
     Integer amount;
     String firstName;
     String lastName;
