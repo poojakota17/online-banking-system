@@ -34,4 +34,8 @@ public class ExternalPayeeService {
         ExternalPayee externalPayee = externalPayeeRepository.findById(externalPayeeId).get();
         externalPayeeRepository.delete(externalPayee);
     }
+
+    public Iterable<ExternalPayee> getExternalPayeesByCustomerId(String customerId) {
+        return externalPayeeRepository.findByCustomerId(customerId);
+    }
 }

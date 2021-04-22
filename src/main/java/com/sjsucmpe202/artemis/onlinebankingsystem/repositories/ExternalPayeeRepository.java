@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExternalPayeeRepository extends CrudRepository<ExternalPayee, String> {
+    Iterable<ExternalPayee> findByCustomerId(String customerId);
 }
