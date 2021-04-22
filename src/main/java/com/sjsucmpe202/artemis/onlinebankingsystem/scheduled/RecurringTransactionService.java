@@ -31,7 +31,7 @@ public class RecurringTransactionService {
         this.transactionService = transactionService;
     }
 
-    @Scheduled(cron = "0 0 6 * * *", zone = "America/Los_Angeles")
+    @Scheduled(cron = "0 0 * * *", zone = "America/Los_Angeles")
     public void createRecurringTransaction() {
         //Get the list of transaction templates for the current date
         Iterable<TransactionTemplate> transactionTemplates = transactionTemplateRepository.findAllByNextTriggerDateEquals(LocalDate.now());
