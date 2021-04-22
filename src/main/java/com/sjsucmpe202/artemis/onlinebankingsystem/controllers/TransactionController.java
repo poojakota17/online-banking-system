@@ -1,5 +1,7 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.TransactionTemplate;
+import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +14,12 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionService;
 public class TransactionController {
 
 	private TransactionService transactionService;
+	private TransactionTemplateService templateService;
 
 	@Autowired
-	public TransactionController(TransactionService transactionService) {
+	public TransactionController(TransactionService transactionService, TransactionTemplateService templateService) {
 		this.transactionService = transactionService;
+		this.templateService = templateService;
 	}
 
 	@PostMapping("/{accountId}")
@@ -28,4 +32,8 @@ public class TransactionController {
 		return transactionService.findAllTransactionsByAccountId(accountId);
 	}
 
+	@PostMapping
+	public TransactionTemplate save(@RequestBody TransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam Long toAccountNumber){
+		return templateService.save(transactionTemplate, fromAccountId, toAccountNumber);
+	}
 }

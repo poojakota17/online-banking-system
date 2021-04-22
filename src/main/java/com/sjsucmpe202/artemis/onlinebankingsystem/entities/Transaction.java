@@ -1,6 +1,8 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +18,11 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.enums.OperationsType;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.TransactionType;
 
 import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Transaction {
 	
 	@Id
@@ -28,8 +32,11 @@ public class Transaction {
 	private OperationsType operationsType;
 	private TransactionType transactionType;
 	private BigDecimal transactionAmount;
+	private LocalDate txnDate;
 	@CreatedDate
-	private Date transactionDateTime;
+	private LocalDateTime createdAt;
+	@CreatedDate
+	private LocalDateTime updatedAt;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "account_id", nullable = false)

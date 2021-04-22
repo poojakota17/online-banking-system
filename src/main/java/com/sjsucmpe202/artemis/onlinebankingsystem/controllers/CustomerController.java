@@ -32,4 +32,10 @@ public class CustomerController {
     public void delete(@PathVariable String customerId){
         customerService.delete(customerId);
     }
+
+    @GetMapping
+    public Iterable<Customer> getAllCustomer(){
+        return customerService.getAllCustomer();
+    }
 }
+

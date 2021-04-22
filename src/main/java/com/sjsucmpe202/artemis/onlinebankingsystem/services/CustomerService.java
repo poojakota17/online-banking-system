@@ -6,6 +6,7 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.CustomerReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,6 +20,9 @@ public class CustomerService {
     }
 
     public Customer save(Customer customer){
+        if(customer.getId() == null){
+            customer.setId(UUID.randomUUID().toString());
+        }
         return customerRepository.save(customer);
     }
 
@@ -29,5 +33,9 @@ public class CustomerService {
 
     public Customer getCustomerById(String customerId) {
         return customerRepository.findById(customerId).get();
+    }
+
+    public Iterable<Customer> getAllCustomer(){
+        return customerRepository.findAll();
     }
 }

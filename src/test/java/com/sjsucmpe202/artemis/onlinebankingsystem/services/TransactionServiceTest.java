@@ -43,7 +43,6 @@ public class TransactionServiceTest {
 		transaction.setMemo("Gift Token");
 		transaction.setOperationsType(OperationsType.CHEQUE);
 		transaction.setTransactionType(TransactionType.DEBIT);
-		transaction.setTransactionDateTime(new Date());
 		transaction.setTransactionAmount(new BigDecimal(2000));
 
 		BankAccount account = new BankAccount() {

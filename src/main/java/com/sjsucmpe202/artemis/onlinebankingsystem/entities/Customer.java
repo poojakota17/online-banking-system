@@ -1,13 +1,11 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.CustomerType;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
