@@ -8,11 +8,15 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.mappers.TransactionMapper;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -61,6 +65,36 @@ public class TransactionService {
 		Transaction toTxn = transactionMapper.toTransactionDTOForToAccount(transactionTemplate);
 		save(fromTxn, fromAccount.getId());
 		save(toTxn, toAccount.getId());
+	}
+	
+	public Iterable<Transaction> findAllTransactionsByDate(LocalDate startDate, LocalDate endDate, String accountId) {
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Date fromDate = Date.from(startDate.atStartOfDay(defaultZoneId).toInstant());
+		Date toDate = Date.from(endDate.atStartOfDay(defaultZoneId).toInstant());
+		Date currentDate = findValidViewTxnDate(fromDate);
+		try {
+			if (currentDate.before(toDate)) {
+				throw new Exception("Date Range exceeds 18Months: Please select a Date range of 18Months");
+			} else {
+				Sort sort = Sort.by("txnDate").descending();
+				return transactionRepository.findAllByBankAccountIdAndTxnDateBetween(accountId, startDate, endDate,
+						sort);
+			}
+		} catch (Exception e) {
+			System.out.println("Error" + e);
+		}
+
+		return null;
+	}
+
+	public Date findValidViewTxnDate(Date fromDate) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fromDate);
+		calendar.add(Calendar.YEAR, 1);
+		calendar.add(Calendar.MONTH, 6);
+		Date currentDate = calendar.getTime();
+		return currentDate;
+
 	}
 
 }

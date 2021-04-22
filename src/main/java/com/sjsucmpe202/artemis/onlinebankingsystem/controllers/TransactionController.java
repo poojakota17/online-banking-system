@@ -2,7 +2,11 @@ package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.TransactionTemplate;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionTemplateService;
+
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
@@ -40,5 +44,13 @@ public class TransactionController {
 	@PostMapping("/one_time")
 	public void saveOneTimeTransaction(@RequestBody TransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam String toAccountNumber){
 		transactionService.saveOnetimeTransaction(transactionTemplate, fromAccountId, toAccountNumber);
+	}
+	
+	@PostMapping("/view/{accountId}")
+	public Iterable<Transaction> getAllTransactionsFromDate(
+			@RequestParam("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+			@RequestParam("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+			@PathVariable String accountId) {
+		return transactionService.findAllTransactionsByDate(fromDate,toDate, accountId);
 	}
 }
