@@ -66,20 +66,13 @@ public class TransactionService {
 		save(toTxn, toAccount.getId());
 	}
 
-	public Iterable<Transaction> findAllTransactionsByDate(LocalDate startDate, LocalDate endDate, String accountId) {
-		try {
-			if (endDate.isAfter(startDate.plusMonths(18))) {
-				throw new Exception("Date Range exceeds 18Months: Please select a Date range of 18Months");
-			} else {
-
-				return transactionRepository.findAllByBankAccountIdAndTxnDateBetweenOrderByTxnDateDesc(accountId,
-						startDate, endDate);
-			}
-		} catch (Exception e) {
-			System.out.println("Error" + e);
+	public Iterable<Transaction> findAllTransactionsByDate(LocalDate startDate, LocalDate endDate, String accountId)
+			throws Exception {
+		if (endDate.isAfter(startDate.plusMonths(18))) {
+			throw new Exception("Date Range exceeds 18Months: Please select a Date range of 18Months");
 		}
-
-		return null;
+		return transactionRepository.findAllByBankAccountIdAndTxnDateBetweenOrderByTxnDateDesc(accountId, startDate,
+				endDate);
 	}
 
 }

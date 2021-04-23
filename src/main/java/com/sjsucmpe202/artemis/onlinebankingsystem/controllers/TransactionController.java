@@ -50,7 +50,7 @@ public class TransactionController {
 	public Iterable<Transaction> getAllTransactionsFromDate(
 			@RequestParam("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
 			@RequestParam("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-			@PathVariable String accountId) {
+			@PathVariable String accountId) throws Exception {
 		return transactionService.findAllTransactionsByDate(fromDate,toDate, accountId);
 	}
 }
