@@ -1,7 +1,8 @@
-import { GET_USER} from "../actions/types";
+import { GET_USER,GET_USERS} from "../actions/types";
 
 const initialstate = {
-  user: {}
+  user: {},
+  allUsers:[]
 };
 
 // eslint-disable-next-line
@@ -11,6 +12,11 @@ export default function (state = initialstate, action) {
       return {
         ...state,
         user: action.payload,
+      };
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
       };
       
     default:

@@ -26,71 +26,47 @@ class BankerDefaultHome extends Component {
             <CardColumns>
               <Card>
                 <Card.Body>
-                  <Card.Title>Accounts</Card.Title>
+                  <Card.Title>Customer Services</Card.Title>
                   <Card.Text>
-                    View your Account Details.{" "}
+                    Serve your Customer!{" "}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <Link to="/customerhome/accounts" className="navbar-logo">
-                    <Button variant="outline-secondary">Accounts</Button>
+                  <Link to="/bankerhome/addcustomer" className="navbar-logo">
+                    <Button variant="outline-secondary">Services</Button>
+
                   </Link>
                 </Card.Footer>
               </Card>
               <Card>
                 <Card.Body>
-                  <Card.Title>Add External Payee</Card.Title>
+                  <Card.Title>Process Refund</Card.Title>
                   <Card.Text>
-                    Add External Payee to setup recurring bill payments!
+                    Process a Refund Request!
+
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
                   <Link
-                    to="/customerhome/addexternalpayee"
+                    to="/bankerhome/processrefunds"
                     className="navbar-logo"
                   >
-                    <Button variant="outline-secondary">Add External Payee</Button>
+                    <Button variant="outline-secondary">Process Refund</Button>
+
                   </Link>{" "}
                 </Card.Footer>
               </Card>
               <Card>
                 <Card.Body>
-                  <Card.Title>Profile</Card.Title>
-                  <Card.Text>View Your Profile Information!</Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <Link to="/customerhome/myprofile" className="navbar-logo">
-                    <Button variant="outline-secondary">View Your Profile</Button>
-                  </Link>
-                </Card.Footer>
-              </Card>
-              <Card>
-                <Card.Body>
-                  <Card.Title>Request Refund</Card.Title>
+                  <Card.Title>View Accounts</Card.Title>
                   <Card.Text>
-                    Click here to request for a refund!{" "}
+                    View Bank Accounts{" "}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <Link to="/customerhome/requestrefund" className="navbar-logo">
-                    <Button variant="outline-secondary">Request Refund</Button>
+                  <Link to="/bankerhome/viewaccounts" className="navbar-logo">
+                    <Button variant="outline-secondary">View Accounts</Button>
                   </Link>
-                </Card.Footer>
-              </Card>
-              <Card>
-                <Card.Body>
-                  <Card.Title>New Transaction</Card.Title>
-                  <Card.Text>
-                    Perform a new transaction
-                  </Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <Link
-                    to="/customerhome/newtransaction"
-                    className="navbar-logo"
-                  >
-                    <Button variant="outline-secondary">New Transaction</Button>
-                  </Link>{" "}
                 </Card.Footer>
               </Card>
             </CardColumns>

@@ -3,12 +3,10 @@ import { Switch, Route } from "react-router-dom";
 import AddCustomer from "./CustomerServices";
 import AdminSideBar from "./AdminSideBar";
 import ProcessRefund from "./ProcessRefunds";
-import ViewTransactions from "./ViewTransactions";
-
-
-import RequestRefund from "../CustomerComponents/RequestRefund";
-import BankerDashboard from "./BankerDashboard";
+import ViewCustomerDetails from './ViewCustomerDetails';
 import BankerDefaultHome from "./BankerDefaultHome";
+import ViewAccounts from "./ViewAccounts";
+import AddNewAccount from "./AddNewAccount";
 
 class AdminHomePage extends Component{
     constructor(props) {
@@ -28,12 +26,12 @@ class AdminHomePage extends Component{
                 </div>
                 <Switch>
                     <Route path="/bankerhome" exact component={BankerDefaultHome} />
-                    <Route path="/bankerhome/viewtransactions"  component={ViewTransactions} />
+                    <Route path="/bankerhome/viewaccounts"  component={ViewAccounts} />
                     <Route path="/bankerhome/processrefunds" component={ProcessRefund} />
                     <Route path="/bankerhome/addcustomer" component={AddCustomer}/>
 
-
-                    <Route path="/bankerhome/requestrefund" component={RequestRefund} />
+                    <Route path="/bankerhome/viewcustomer/:id" component={ViewCustomerDetails}/>
+                    <Route path="/bankerhome/registeraccount/:id" component={AddNewAccount}/>
                 </Switch>
             </div>
         );

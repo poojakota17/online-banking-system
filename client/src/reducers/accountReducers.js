@@ -1,9 +1,11 @@
 import {
-    GET_ACCOUNTS
+    GET_ACCOUNTS,
+    GET_ALL_ACCOUNTS
   } from "../actions/types";
   
   const initialstate = {
-    accounts: []
+    accounts: [],
+    allAccounts:[]
   };
   
   // eslint-disable-next-line
@@ -13,6 +15,11 @@ import {
         return {
           ...state,
           accounts: action.payload,
+        };
+    case GET_ALL_ACCOUNTS:
+        return {
+            ...state,
+            allAccounts: action.payload,
         };
       
       default:

@@ -55,7 +55,7 @@ const AdminSideBar = () =>{
                             <Link to="/bankerhome/processrefunds">Process Refunds</Link>
                             </MenuItem>
                             <MenuItem icon={<GrTransaction />}>
-                                <Link to="/bankerhome/viewtransactions" >View Transactions</Link>
+                                <Link to="/bankerhome/viewaccounts" >View Accounts</Link>
                             </MenuItem>
                         </Menu>
                     </SidebarContent>
