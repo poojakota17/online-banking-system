@@ -24,8 +24,6 @@ import "./CustomerSidebar.css";
 
 const CustomerSideBar = () => {
 
-    const [menuHome, setmenuHome] = useState(true)
-
     const logout = () => {
         const user = Pool.getCurrentUser();
         if (user) {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import AddCustomer from "./AddCustomer";
+import AddCustomer from "./CustomerServices";
 import AdminSideBar from "./AdminSideBar";
 import ProcessRefund from "./ProcessRefunds";
 import ViewTransactions from "./ViewTransactions";
@@ -8,6 +8,7 @@ import ViewTransactions from "./ViewTransactions";
 
 import RequestRefund from "../CustomerComponents/RequestRefund";
 import BankerDashboard from "./BankerDashboard";
+import BankerDefaultHome from "./BankerDefaultHome";
 
 class AdminHomePage extends Component{
     constructor(props) {
@@ -26,7 +27,7 @@ class AdminHomePage extends Component{
                     <AdminSideBar/>
                 </div>
                 <Switch>
-                    {/*<Route path="/bankerhome" exact component={BankerDashboard} />*/}
+                    <Route path="/bankerhome" exact component={BankerDefaultHome} />
                     <Route path="/bankerhome/viewtransactions"  component={ViewTransactions} />
                     <Route path="/bankerhome/processrefunds" component={ProcessRefund} />
                     <Route path="/bankerhome/addcustomer" component={AddCustomer}/>

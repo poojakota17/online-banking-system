@@ -76,6 +76,7 @@ function SignUpComponent(props) {
             ssn: ssn
           }
         props.saveUser(user);
+        props.closeRegistrationModal();
         } else if (props.groupname === "BankerGroup") {
           let user = {
           
@@ -94,7 +95,7 @@ function SignUpComponent(props) {
     
         }
       });
-  
+
   };
 
   return (
@@ -201,12 +202,23 @@ function SignUpComponent(props) {
             onChange={(event) => setPassword(event.target.value)}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="secondary" type="submit">
           Submit
         </Button>
-        <Alert size="sm" show={shows} variant="warning">
-          <Alert.Heading>Sign Up Successful!</Alert.Heading>
-        </Alert>
+       <br />
+          {
+            props.groupname === "CustomerGroup" ? (
+              <Alert size="sm" show={shows} variant="dark">
+              Customer Registration Successful!
+              </Alert>
+            ):(
+              <Alert size="sm" show={shows} variant="dark">
+              Sign Up Successful!
+              </Alert>
+            )
+          }
+          
+       
       </Form>
     </div>
   );
