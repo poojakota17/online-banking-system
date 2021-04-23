@@ -21,9 +21,7 @@ List<RefundRequests> getrequests(String id);
 @Modifying
 @Query(value ="UPDATE  RefundRequests r set r.status= 'CLOSE' where r.requestId =:requestId")
    void setRequestStatusByRequestId(@Param("requestId") String requestId);
-@Query(value="Select rr from RefundRequests rr where rr.status='OPEN'")
-   List<RefundRequests> getOpenRefundRequests();
-@Query(value="Select rr from RefundRequests rr where rr.status='ClOSE'")
-   List<RefundRequests> getClosedRefundRequests();
+
+Iterable<RefundRequests> findRefundRequestsByStatusEquals(String Status);
 }
 

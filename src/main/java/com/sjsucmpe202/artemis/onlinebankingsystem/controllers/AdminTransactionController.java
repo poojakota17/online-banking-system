@@ -12,14 +12,11 @@ public class AdminTransactionController {
 
     @Autowired
     private RefundService refundService;
-   @GetMapping("/open")
-    public List<RefundRequests> getOpenRefundRequestsLists(){
-        return refundService.getOpenRefundRequestsList();
+   @GetMapping
+    public Iterable<RefundRequests> getOpenRefundRequestsLists(@RequestParam String status){
+        return refundService.getRefundRequestsByStatus(status);
     }
-    @GetMapping("/closed")
-    public List<RefundRequests> getClosedRefundRequestsLists(){
-       return refundService.getClosedRefundRequestsList();
-    }
+
 
     @PostMapping
     public void addRefundRequests(@RequestBody RefundRequests refundRequests){

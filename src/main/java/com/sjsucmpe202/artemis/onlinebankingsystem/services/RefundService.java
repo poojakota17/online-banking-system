@@ -16,18 +16,12 @@ public class RefundService {
 
     @Autowired
     private RefundRequestsRepository refundRequestsRepository;
-    public List<RefundRequests> getOpenRefundRequestsList()
 
-    {
-        List<RefundRequests> refundRequestsList = new ArrayList<RefundRequests>();
-        refundRequestsRepository.getOpenRefundRequests().forEach(refundRequestsList::add);
-        return refundRequestsList;
+    public Iterable<RefundRequests> getRefundRequestsByStatus(String status){
+
+        return refundRequestsRepository.findRefundRequestsByStatusEquals(status);
     }
-    public List<RefundRequests> getClosedRefundRequestsList(){
-        List<RefundRequests> refundRequestsList = new ArrayList<RefundRequests>();
-        refundRequestsRepository.getClosedRefundRequests().forEach(refundRequestsList::add);
-        return refundRequestsList;
-    }
+
 
 
     public List<RefundRequests> getRefundRequestbyId(String id){
