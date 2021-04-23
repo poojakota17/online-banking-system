@@ -19,6 +19,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import "../CustomerComponents/CustomerSidebar.css";
 import Pool from "../../UserPool";
 import {FiHome, FiLogOut} from "react-icons/fi";
+import {MdSupervisorAccount} from "react-icons/all";
 
 
 const AdminSideBar = () =>{
@@ -54,8 +55,11 @@ const AdminSideBar = () =>{
                             <MenuItem icon={<RiRefund2Fill />}>
                             <Link to="/bankerhome/processrefunds">Process Refunds</Link>
                             </MenuItem>
+
                             <MenuItem icon={<GrTransaction />}>
                                 <Link to="/bankerhome/viewaccounts" >View Accounts</Link>
+
+
                             </MenuItem>
                         </Menu>
                     </SidebarContent>

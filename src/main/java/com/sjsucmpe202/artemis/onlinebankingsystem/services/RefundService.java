@@ -16,17 +16,34 @@ public class RefundService {
 
     @Autowired
     private RefundRequestsRepository refundRequestsRepository;
-    public List<RefundRequests> getRefundRequestsList()
+    public List<RefundRequests> getOpenRefundRequestsList()
 
     {
         List<RefundRequests> refundRequestsList = new ArrayList<RefundRequests>();
-        refundRequestsRepository.findAll().forEach(refundRequestsList::add);
+        refundRequestsRepository.getOpenRefundRequests().forEach(refundRequestsList::add);
         return refundRequestsList;
+    }
+    public List<RefundRequests> getClosedRefundRequestsList(){
+        List<RefundRequests> refundRequestsList = new ArrayList<RefundRequests>();
+        refundRequestsRepository.getClosedRefundRequests().forEach(refundRequestsList::add);
+        return refundRequestsList;
+    }
+
+
+    public List<RefundRequests> getRefundRequestbyId(String id){
+        List<RefundRequests> requestsList= new ArrayList<>();
+         refundRequestsRepository.getrequests(id).forEach(requestsList::add);
+        return  requestsList;
+
     }
     public void addRefundRequests(RefundRequests refundRequests){
         refundRequests.setRequestId(UUID.randomUUID().toString());
         refundRequests.setStatus(StatusType.OPEN.toString());
         refundRequestsRepository.save(refundRequests);
+    }
+
+    public void updateRefundRequest(String requestId){
+    refundRequestsRepository.setRequestStatusByRequestId(requestId);
     }
 }
 

@@ -12,14 +12,28 @@ public class AdminTransactionController {
 
     @Autowired
     private RefundService refundService;
-   @GetMapping
-    public List<RefundRequests> getRefundRequestsLists(){
-        return refundService.getRefundRequestsList();
+   @GetMapping("/open")
+    public List<RefundRequests> getOpenRefundRequestsLists(){
+        return refundService.getOpenRefundRequestsList();
+    }
+    @GetMapping("/closed")
+    public List<RefundRequests> getClosedRefundRequestsLists(){
+       return refundService.getClosedRefundRequestsList();
     }
 
     @PostMapping
-    public void addRequests(@RequestBody RefundRequests refundRequests){
+    public void addRefundRequests(@RequestBody RefundRequests refundRequests){
        refundService.addRefundRequests(refundRequests);
+    }
+    @GetMapping("/customerid")
+    public List<RefundRequests> getRefundRequestsByCustomerId(@RequestParam String id){
+
+       return refundService.getRefundRequestbyId(id);
+    }
+    @PutMapping("/requestid")
+    public void updateRefundStatus(@RequestParam String requestId)
+    {
+        refundService.updateRefundRequest(requestId);
     }
 
 }
