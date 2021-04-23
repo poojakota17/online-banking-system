@@ -55,7 +55,9 @@ class AddExternalPayee extends Component {
           }
 
         console.log(userId, payeeObject);
-        this.props.saveExtPayee(userId, payeeObject)
+        this.props.saveExtPayee(userId, payeeObject).then(res=> {
+            this.props.history.push("/customerhome");
+        })
     }
     render() {
         return (
@@ -69,12 +71,15 @@ class AddExternalPayee extends Component {
                 <br />
                 <br />
                 <hr />
-                {this.state.externalPayees.length === 0 ? <h5 className="center">You haven't added any External Payees yet!</h5>
+                
+                {this.state.externalPayees.length === 0 ? <h6 className="center">Y O U &nbsp;&nbsp;H A V E N ' T&nbsp;&nbsp;A D D E D &nbsp;&nbsp;A N Y &nbsp;&nbsp;E X T E R N A L &nbsp;&nbsp;P A Y E E S &nbsp;&nbsp;Y E T !</h6>
                     :
+                    <>
+                    <h6 className="center">L I S T &nbsp;&nbsp; OF &nbsp;&nbsp; E X T E R N A L &nbsp;&nbsp; P A Y E E S</h6>
                     <div className="tableContainer wrapper">
                         <Container>
                             <div className="row">
-                                <table className="table table-striped table-bordered">
+                                <table className="table table-striped">
                                     <thead>
                                         <tr>
                                             <th> Account Holder Name</th>
@@ -95,7 +100,7 @@ class AddExternalPayee extends Component {
                             </div>
                         </Container>
                     </div>
-
+                </>
                 }
 
                 {this.state.showNewExtPayeeModal && (

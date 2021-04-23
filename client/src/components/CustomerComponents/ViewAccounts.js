@@ -44,7 +44,7 @@ class ViewAccounts extends Component {
         <header className="pageHeader">
           <h5 className="center">A C T I V E &nbsp; A C C O U N T S</h5>
         </header>
-        {this.state.accounts.length === 0 ? <h3 className="center">There are no active accounts!</h3>
+        {this.state.accounts.length === 0 ?<h6 className="center">Y O U &nbsp;&nbsp;D O N ' T&nbsp;&nbsp;H A V E &nbsp;&nbsp;A N Y &nbsp;&nbsp;A C T I V E &nbsp;&nbsp;A C C O U N T S !</h6>
           :
           <div className="tableContainer wrapper">
           <Container>

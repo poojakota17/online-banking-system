@@ -78,7 +78,10 @@ class RequestRefund extends Component {
         }
 
         console.log(requestObject);
-        this.props.saveRequest(requestObject)
+        this.props.saveRequest(requestObject).then(res=> {
+            this.props.history.push("/customerhome");
+        })
+        
     }
     render() {
         return (
@@ -92,7 +95,7 @@ class RequestRefund extends Component {
                 <br />
                 <br />
                 <hr />
-                {this.state.refundrequests.length === 0 ? <h5 className="center">You haven't raised any requests yet!</h5>
+                {this.state.refundrequests.length === 0 ? <h6 className="center">Y O U &nbsp;&nbsp;H A V E N ' T&nbsp;&nbsp;R A I S E D&nbsp;&nbsp;A N Y &nbsp;&nbsp;R E Q U E S T S &nbsp;&nbsp;Y E T !</h6>
                     :
                     <div className="tableContainer wrapper">
                         <Container>
