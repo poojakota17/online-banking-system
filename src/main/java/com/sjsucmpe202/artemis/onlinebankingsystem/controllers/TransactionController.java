@@ -46,7 +46,7 @@ public class TransactionController {
 		transactionService.saveOnetimeTransaction(transactionTemplate, fromAccountId, toAccountNumber);
 	}
 	
-	@PostMapping("/view/{accountId}")
+	@GetMapping("/view/{accountId}")
 	public Iterable<Transaction> getAllTransactionsFromDate(
 			@RequestParam("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
 			@RequestParam("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
