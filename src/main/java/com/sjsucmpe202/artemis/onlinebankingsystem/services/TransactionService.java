@@ -1,20 +1,20 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.services;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.TransactionTemplate;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
+import com.sjsucmpe202.artemis.onlinebankingsystem.enums.OperationsType;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.TransactionType;
 import com.sjsucmpe202.artemis.onlinebankingsystem.mappers.TransactionMapper;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.TransactionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 public class TransactionService {
@@ -64,6 +64,22 @@ public class TransactionService {
 		Transaction toTxn = transactionMapper.toTransactionDTOForToAccount(transactionTemplate);
 		save(fromTxn, fromAccount.getId());
 		save(toTxn, toAccount.getId());
+	}
+	@Transactional
+	public void toAndFromTransactionByAdmin(String accountNo,BigDecimal amount){
+		Transaction fromTransaction= new Transaction();
+		Transaction toTransaction=new Transaction();
+		BankAccount toBankAccount= accountRepository.findByAccountNumber(accountNo);
+		fromTransaction.setTransactionType(TransactionType.DEBIT);
+		fromTransaction.setTransactionAmount(amount);
+		fromTransaction.setOperationsType(OperationsType.CHEQUE);
+		fromTransaction.setMemo("Refund");
+		toTransaction.setTransactionType(TransactionType.CREDIT);
+		toTransaction.setTransactionAmount(amount);
+		toTransaction.setOperationsType(OperationsType.CHEQUE);
+		toTransaction.setMemo("Refund");
+		save(fromTransaction,"86ffb5cd-a5cf-4f48-8924-55ee34ca0588");
+		save(toTransaction,toBankAccount.getId());
 	}
 
 	public Iterable<Transaction> findAllTransactionsByDate(LocalDate startDate, LocalDate endDate, String accountId)
