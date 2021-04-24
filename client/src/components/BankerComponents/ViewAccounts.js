@@ -14,7 +14,7 @@ class ViewAccounts extends Component {
     }
 
     back = () => {
-        this.props.history.goBack();
+        this.props.history.push("/bankerhome/addcustomer");
     }
 
     delete(accountId){

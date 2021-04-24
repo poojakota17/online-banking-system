@@ -1,9 +1,13 @@
 import {
-    GET_REQUESTS
+    GET_REQUESTS,
+    GET_OPEN_REQUESTS,
+    GET_CLOSED_REQUESTS
   } from "../actions/types";
   
   const initialstate = {
-    refundRequests: []
+    refundRequests: [],
+    openRefundRequests:[],
+    closedRefundRequests:[]
   };
   
   // eslint-disable-next-line
@@ -13,6 +17,18 @@ import {
         return {
           ...state,
           refundRequests: action.payload,
+        };
+
+    case GET_OPEN_REQUESTS:
+        return {
+        ...state,
+        openRefundRequests: action.payload,
+        };
+
+    case GET_CLOSED_REQUESTS:
+        return {
+        ...state,
+            closedRefundRequests: action.payload,
         };
       
       default:

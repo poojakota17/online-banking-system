@@ -27,6 +27,9 @@ class RequestRefund extends Component {
                 {accountNumber:56564444444444444}
             ]
         };
+        this.changeProductCategoryHandler = this.changeProductCategoryHandler.bind(
+            this
+          );
     }
     async componentDidMount() {
         
@@ -51,9 +54,9 @@ class RequestRefund extends Component {
         }
 
     }
-    handleChange = (event) => {
-        this.setState({accountNumber: event.target.value});
-      }
+    changeProductCategoryHandler = (event) => {
+        this.setState({ accountNumber: event.target.value });
+      };
     openModal = () => {
         this.setState({
             showNewRequestModal: true
@@ -168,21 +171,45 @@ class RequestRefund extends Component {
                                                 />
                                             </Form.Group>
                                         </Form.Row>
+
+
+                                        <div className="form-group">
+                            <label> Choose Account </label>
+                            <select
+                              name="category"
+                              className="form-control"
+                              onChange={this.changeProductCategoryHandler}
+                            >
+                              <option value="">
+                                {" "}
+                                Please choose an Account{" "}
+                              </option>
+                              {this.state.accounts.map((account) => {
+                                if (this.state.accountNumber === account.accountNumber) {
+                                  return (
+                                    <option value={account.accountNumber} selected="selected">
+                                      {" "}
+                                      {account.accountType}{" "}
+                                    </option>
+                                  );
+                                } else {
+                                  return <option value={account.accountNumber}> {account.accountType} </option>;
+                                }
+                              })}
+                            </select>
+                          </div>
+
+
                                         <Form.Row>
                                             <Form.Group as={Col} controlId="formfirstname">
                                                 <Form.Label>Account Number</Form.Label> 
-                                                    <select value="Select Account" onChange={this.handleChange}>
-                                                    <option value="">--Select One--</option>
-                                                    {this.state.accounts.map((account) => (
-                                            <option value={account.accountnumber}>{account.accountNumber}</option>
-                                                    ))}
-                                                    </select>
+                                                   
                                                 <Form.Control
                                                     required
+                                                    readOnly
                                                     type="text"
-                                                    placeholder="Enter AccountNumber"
                                                     value={this.state.accountNumber}
-                                                    onChange={(event) => this.setState({ accountNumber: event.target.value })}
+                                                    
                                                 />
                                             </Form.Group>
                                             <Form.Group as={Col} controlId="formamount">

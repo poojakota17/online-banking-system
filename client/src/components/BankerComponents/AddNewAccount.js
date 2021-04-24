@@ -23,7 +23,7 @@ class AddNewAccount extends Component {
     }
 
     back() {
-        this.props.history.goBack();
+        this.props.history.push("/bankerhome/addcustomer");
     }
     onValueChange = (event) => {
         this.setState({
