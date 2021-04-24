@@ -18,6 +18,8 @@ class NewTransaction extends Component {
         showNewRequestModal: false,
         fromAccountNumber: "",
         toAccountNumber: "",
+        transaction:"",
+        transactionType:"",
         amount: "",
         accounts:[
             {fromAccountNumber:12111111111111212},
@@ -45,6 +47,22 @@ handleChangeExternal = (event) => {
   this.setState({fromAccountNumber: event.target.value});
 }
 
+handleChangeTransaction = (event) => {
+  this.setState({transaction: event.target.value});
+}
+
+handleChangeTransactionType = (event) => {
+  this.setState({transactionType: event.target.value});
+}
+
+handleChangeTransactionExternal = (event) => {
+  this.setState({transaction: event.target.value});
+}
+
+handleChangeTransactionTypeExternal = (event) => {
+  this.setState({transactionType: event.target.value});
+}
+
   openModal = () => {
     this.setState({
         showNewRequestModal: true
@@ -62,6 +80,8 @@ closeModal = () => {
       showNewRequestModal: false,
       fromAccountNumber: "",
       toAccountNumber: "",
+      transaction: "",
+      transactionType: "",
       amount: ""
    });
 };
@@ -71,6 +91,8 @@ closeModalExternal = () => {
       showNewRequestModalExternal: false,
       fromAccountNumber: "",
       toAccountNumber: "",
+      transaction: "",
+      transactionType: "",
       amount: ""
    });
 };
@@ -82,6 +104,8 @@ onSubmit = () => {
   let requestObject = {
     fromAccountNumber: this.state.fromAccountNumber,
     toAccountNumber: this.state.toAccountNumber,
+    transaction: this.state.transaction,
+    transactionType: this.state.transactionType,
     amount: this.state.amount
   }
 
@@ -95,6 +119,8 @@ onSubmitExternal = () => {
   let requestObject = {
     fromAccountNumber: this.state.fromAccountNumber,
     toAccountNumber: this.state.toAccountNumber,
+    transaction: this.state.transaction,
+    transactionType: this.state.transactionType,
     amount: this.state.amount
   }
 
@@ -148,7 +174,6 @@ render() {
                                           onChange={(event) => this.setState({ fromAccountNumber: event.target.value })}
                                       />
                                   </Form.Group>
-                                  
                               </Form.Row>
                               <Form.Row>
                               <Form.Group as={Col} controlId="formtoaccount">
@@ -162,6 +187,44 @@ render() {
                                 />
                               </Form.Group>
                               </Form.Row>
+
+                              <Form.Row>
+                              <Form.Group as={Col} controlId="formtransaction">
+                                  <Form.Label>Transaction</Form.Label>
+                                  <select value="Select Transaction" onChange={this.handleChangeTransaction}>
+                                          <option value="">--Select One--</option>
+                                          <option value="ONE-TIME">One-Time</option>
+                                          <option value="DAILY">DAILY</option>
+                                          <option value="WEEKLY">WEEKLY</option>
+                                          <option value="MONTHLY">MONTHLY</option>
+                                          <option value="YEARLY">YEARLY</option>
+                                          </select>
+                                  <Form.Control
+                                      required
+                                      type="text"
+                                      placeholder="Transaction"
+                                      value={this.state.transaction}
+                                      onChange={(event) => this.setState({ transaction: event.target.value })}
+                                />
+                              </Form.Group>
+                              
+                              <Form.Group as={Col} controlId="formtransactiontype">
+                                  <Form.Label>Transaction Type</Form.Label>
+                                  <select value="Select Transaction Type" onChange={this.handleChangeTransactionType}>
+                                      <option value="">--Select One--</option>
+                                      <option value="CREDIT">CREDIT</option>
+                                      <option value="DEBIT">DEBIT</option>
+                                          </select>
+                                  <Form.Control
+                                      required
+                                      type="text"
+                                      placeholder="Transaction Type"
+                                      value={this.state.transactionType}
+                                      onChange={(event) => this.setState({ transactionType: event.target.value })}
+                                />
+                              </Form.Group>
+                              </Form.Row>
+
                               <Form.Row>
                               <Form.Group as={Col} controlId="formamount">
                                   <Form.Label>Amount</Form.Label>
@@ -228,6 +291,43 @@ render() {
                               />
                             </Form.Group>
                             </Form.Row>
+                            <Form.Row>
+                              <Form.Group as={Col} controlId="formtransaction">
+                                  <Form.Label>Transaction</Form.Label>
+                                  <select value="Select Transaction" onChange={this.handleChangeTransactionExternal}>
+                                          <option value="">--Select One--</option>
+                                          <option value="ONE-TIME">One-Time</option>
+                                          <option value="DAILY">DAILY</option>
+                                          <option value="WEEKLY">WEEKLY</option>
+                                          <option value="MONTHLY">MONTHLY</option>
+                                          <option value="YEARLY">YEARLY</option>
+                                          </select>
+                                  <Form.Control
+                                      required
+                                      type="text"
+                                      placeholder="Transaction"
+                                      value={this.state.transaction}
+                                      onChange={(event) => this.setState({ transaction: event.target.value })}
+                                />
+                              </Form.Group>
+                              
+                              <Form.Group as={Col} controlId="formtransactiontype">
+                                  <Form.Label>Transaction Type</Form.Label>
+                                  <select value="Select Transaction Type" onChange={this.handleChangeTransactionTypeExternal}>
+                                      <option value="">--Select One--</option>
+                                      <option value="CREDIT">CREDIT</option>
+                                      <option value="DEBIT">DEBIT</option>
+                                          </select>
+                                  <Form.Control
+                                      required
+                                      type="text"
+                                      placeholder="Transaction Type"
+                                      value={this.state.transactionType}
+                                      onChange={(event) => this.setState({ transactionType: event.target.value })}
+                                />
+                              </Form.Group>
+                              </Form.Row>
+
                             <Form.Row>
                             <Form.Group as={Col} controlId="formamount">
                                 <Form.Label>Amount</Form.Label>
