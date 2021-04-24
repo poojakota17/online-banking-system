@@ -56,19 +56,6 @@ class BankerDefaultHome extends Component {
                   </Link>{" "}
                 </Card.Footer>
               </Card>
-              <Card>
-                <Card.Body>
-                  <Card.Title>View Accounts</Card.Title>
-                  <Card.Text>
-                    View Bank Accounts{" "}
-                  </Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <Link to="/bankerhome/viewaccounts" className="navbar-logo">
-                    <Button variant="outline-secondary">View Accounts</Button>
-                  </Link>
-                </Card.Footer>
-              </Card>
             </CardColumns>
           </Fade>
         </div>

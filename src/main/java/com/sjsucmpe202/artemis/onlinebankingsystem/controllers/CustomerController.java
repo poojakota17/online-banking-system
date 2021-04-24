@@ -35,7 +35,7 @@ public class CustomerController {
 
     @GetMapping
     public Iterable<Customer> getAllCustomer(){
-        return customerService.getAllCustomer();
+        return customerService.getAllCustomerUsers();
     }
 }
 

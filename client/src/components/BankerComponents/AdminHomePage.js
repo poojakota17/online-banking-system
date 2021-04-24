@@ -26,7 +26,7 @@ class AdminHomePage extends Component{
                 </div>
                 <Switch>
                     <Route path="/bankerhome" exact component={BankerDefaultHome} />
-                    <Route path="/bankerhome/viewaccounts"  component={ViewAccounts} />
+                    <Route path="/bankerhome/viewaccounts/:id"  component={ViewAccounts} />
                     <Route path="/bankerhome/processrefunds" component={ProcessRefund} />
                     <Route path="/bankerhome/addcustomer" component={AddCustomer}/>
 

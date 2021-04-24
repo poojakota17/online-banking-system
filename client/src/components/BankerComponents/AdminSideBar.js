@@ -10,8 +10,6 @@ import {
 } from "react-pro-sidebar";
 import {Link} from "react-router-dom";
 
-
-
 import { GrTransaction, GrUserAdd} from "react-icons/gr";
 import {RiRefund2Fill} from "react-icons/ri"
 
@@ -54,12 +52,6 @@ const AdminSideBar = () =>{
                             </MenuItem>
                             <MenuItem icon={<RiRefund2Fill />}>
                             <Link to="/bankerhome/processrefunds">Process Refunds</Link>
-                            </MenuItem>
-
-                            <MenuItem icon={<GrTransaction />}>
-                                <Link to="/bankerhome/viewaccounts" >View Accounts</Link>
-
-
                             </MenuItem>
                         </Menu>
                     </SidebarContent>

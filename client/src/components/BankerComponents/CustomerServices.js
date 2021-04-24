@@ -37,6 +37,9 @@ class CustomerServices extends Component {
     viewCustomerDetails(id){
         this.props.history.push(`/bankerhome/viewcustomer/${id}`);
     }
+    viewAccountDetails(id){
+        this.props.history.push(`/bankerhome/viewaccounts/${id}`);
+    }
 
     registerAccount(id){
         this.props.history.push(`/bankerhome/registeraccount/${id}`);
@@ -78,8 +81,9 @@ class CustomerServices extends Component {
                                                 <td> {customer.lastName}</td>
                                                 <td> {customer.phoneNumber}</td>
                                                 <td>
-                                                <Button variant="secondary" size="sm" onClick={() => this.viewCustomerDetails(customer.id)}>View </Button>
-                                                {" "}<Button variant="secondary" size="sm" onClick={() => this.registerAccount(customer.id)}>Register New Account</Button>
+                                                <Button variant="secondary" size="sm" onClick={() => this.registerAccount(customer.id)}>Register New Account</Button>{" "}
+                                                <Button variant="secondary" size="sm" onClick={() => this.viewAccountDetails(customer.id)}>View Existing Accounts</Button>
+                                                {" "}<Button variant="secondary" size="sm" onClick={() => this.viewCustomerDetails(customer.id)}>Customer Details</Button>
                                                 </td>
                                             </tr>
                                         ))}
