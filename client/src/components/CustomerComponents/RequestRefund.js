@@ -6,7 +6,7 @@ import Zoom from "react-reveal/Zoom";
 import Pool from "../../UserPool";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import { saveRequest } from "../../actions/refundActions";
+import { saveRequest ,getRequests} from "../../actions/refundActions";
 import { connect } from "react-redux";
 import { getAccounts } from '../../actions/accountActions';
 class RequestRefund extends Component {
@@ -29,9 +29,13 @@ class RequestRefund extends Component {
         };
     }
     async componentDidMount() {
+        
         const user = Pool.getCurrentUser();
         if (user) {
             let userId = user.getUsername();
+            await this.props.getRequests(userId);
+            console.log(this.props.refundRequests);
+            this.setState({ refundrequests: this.props.refundRequests.refundRequests });
             await this.props.getAccounts(userId);
             console.log(this.props.accounts);
             this.setState({ accounts: this.props.accounts.accounts });
@@ -74,11 +78,12 @@ class RequestRefund extends Component {
                 amount: this.state.amount,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
-                reason: this.state.reason
+                reason: this.state.reason,
+                status: "OPEN"
         }
 
-        console.log(requestObject);
-        this.props.saveRequest(requestObject).then(res=> {
+        console.log(userId,requestObject);
+        this.props.saveRequest(userId,requestObject).then(res=> {
             this.props.history.push("/customerhome");
         })
         
@@ -97,6 +102,8 @@ class RequestRefund extends Component {
                 <hr />
                 {this.state.refundrequests.length === 0 ? <h6 className="center">Y O U &nbsp;&nbsp;H A V E N ' T&nbsp;&nbsp;R A I S E D&nbsp;&nbsp;A N Y &nbsp;&nbsp;R E Q U E S T S &nbsp;&nbsp;Y E T !</h6>
                     :
+                    <>
+                     <h6 className="center">L I S T &nbsp;&nbsp; OF &nbsp;&nbsp; R E F U N D &nbsp;&nbsp; R E Q U E S T S</h6>
                     <div className="tableContainer wrapper">
                         <Container>
                             <div className="row">
@@ -115,7 +122,7 @@ class RequestRefund extends Component {
                                                 <td> {request.accountNumber} </td>
                                                 <td> {request.amount}</td>
                                                 <td> {request.reason}</td>
-                                                <td> ACTIVE </td>
+                                                <td> {request.status} </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -123,7 +130,7 @@ class RequestRefund extends Component {
                             </div>
                         </Container>
                     </div>
-
+                 </>
                 }
 
                 {this.state.showNewRequestModal && (
@@ -210,10 +217,10 @@ class RequestRefund extends Component {
     }
 }
 
-function mapStateToProps({ accounts }) {
-    return { accounts };
+function mapStateToProps({ accounts , refundRequests }) {
+    return { accounts, refundRequests};
   }
 
   export default connect(mapStateToProps, {
-    getAccounts,saveRequest
+    getAccounts,getRequests,saveRequest
   })(RequestRefund);
