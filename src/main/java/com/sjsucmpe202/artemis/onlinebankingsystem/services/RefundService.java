@@ -16,7 +16,6 @@ public class RefundService {
 
     private RefundRequestsRepository refundRequestsRepository;
     private CustomerRepository customerRepository;
-    private RefundRequests refundRequests;
 
     public RefundService(RefundRequestsRepository refundRequestsRepository,CustomerRepository customerRepository){
         this.customerRepository=customerRepository;
@@ -42,11 +41,6 @@ public class RefundService {
             return refundRequestsRepository.save(refundRequests);
     }
 
-    public RefundRequests updateRefundRequest(String requestId){
-        refundRequests= refundRequestsRepository.findById(requestId).get();
-        refundRequests.setStatus(StatusType.CLOSE);
-         return refundRequestsRepository.save(refundRequests);
-    }
 }
 
 

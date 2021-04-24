@@ -2,7 +2,6 @@ package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.RefundRequests;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.StatusType;
-import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.RefundService;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ import java.math.BigDecimal;
 @RequestMapping("/api/getrefundrequest")
 public class AdminTransactionController {
 
-
-    private RefundService refundService;
-    public TransactionService transactionService;
-
     @Autowired
-   public AdminTransactionController(RefundService refundService, TransactionService transactionService, AccountRepository accountRepository){
+    private RefundService refundService;
+    private TransactionService transactionService;
+
+
+   public AdminTransactionController(RefundService refundService, TransactionService transactionService){
        this.refundService=refundService;
        this.transactionService=transactionService;
 
@@ -42,13 +41,13 @@ public class AdminTransactionController {
        return refundService.getRefundRequestById(id);
     }
 
-    @PutMapping("/requestid")
-    public RefundRequests updateRefundStatus(@RequestParam String requestId)
-    { return refundService.updateRefundRequest(requestId);
-    }
+//    @PutMapping("/requestid")
+//    public RefundRequests updateRefundStatus(@RequestParam String requestId)
+//    { return refundService.updateRefundRequest(requestId);
+//    }
 
     @PostMapping("/toandfromrefundprocess")
-    public void toAndFromRefundProcessTransaction(@RequestParam String accountNo, @RequestParam BigDecimal amount){
-        transactionService.toAndFromTransactionByAdmin(accountNo,amount);
+    public void toAndFromRefundProcessTransaction(@RequestParam String requestId,@RequestParam String accountNo, @RequestParam BigDecimal amount){
+        transactionService.toAndFromTransactionByAdmin(requestId,accountNo,amount);
     }
 }

@@ -15,7 +15,7 @@ public class RefundRequests {
     Integer amount;
     String firstName;
     String lastName;
-    Long accountNumber;
+    String accountNumber;
     String reason;
     StatusType status;
     @ManyToOne(fetch = FetchType.LAZY)

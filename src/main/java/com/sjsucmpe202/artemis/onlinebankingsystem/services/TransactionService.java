@@ -1,12 +1,15 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.services;
 
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.RefundRequests;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.TransactionTemplate;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.accounts.BankAccount;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.OperationsType;
+import com.sjsucmpe202.artemis.onlinebankingsystem.enums.StatusType;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.TransactionType;
 import com.sjsucmpe202.artemis.onlinebankingsystem.mappers.TransactionMapper;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.AccountRepository;
+import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.RefundRequestsRepository;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +25,15 @@ public class TransactionService {
 	private TransactionRepository transactionRepository;
 	private AccountRepository accountRepository;
 	private TransactionMapper transactionMapper;
+	private RefundRequestsRepository refundRequestsRepository;
 
 	@Autowired
-	public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository,
+	public TransactionService(RefundRequestsRepository refundRequestsRepository,TransactionRepository transactionRepository, AccountRepository accountRepository,
 			TransactionMapper transactionMapper) {
 		this.transactionRepository = transactionRepository;
 		this.accountRepository = accountRepository;
 		this.transactionMapper = transactionMapper;
+		this.refundRequestsRepository=refundRequestsRepository;
 	}
 
 	@Transactional
@@ -66,9 +71,10 @@ public class TransactionService {
 		save(toTxn, toAccount.getId());
 	}
 	@Transactional
-	public void toAndFromTransactionByAdmin(String accountNo,BigDecimal amount){
+	public void toAndFromTransactionByAdmin(String requestId,String accountNo,BigDecimal amount){
 		Transaction fromTransaction= new Transaction();
 		Transaction toTransaction=new Transaction();
+		RefundRequests refundRequests;
 		BankAccount toBankAccount= accountRepository.findByAccountNumber(accountNo);
 		fromTransaction.setTransactionType(TransactionType.DEBIT);
 		fromTransaction.setTransactionAmount(amount);
@@ -80,6 +86,9 @@ public class TransactionService {
 		toTransaction.setMemo("Refund");
 		save(fromTransaction,"86ffb5cd-a5cf-4f48-8924-55ee34ca0588");
 		save(toTransaction,toBankAccount.getId());
+		refundRequests= refundRequestsRepository.findById(requestId).get();
+		refundRequests.setStatus(StatusType.CLOSE);
+		 refundRequestsRepository.save(refundRequests);
 	}
 
 	public Iterable<Transaction> findAllTransactionsByDate(LocalDate startDate, LocalDate endDate, String accountId)
