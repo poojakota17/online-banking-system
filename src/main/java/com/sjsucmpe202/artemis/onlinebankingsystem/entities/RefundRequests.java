@@ -1,8 +1,9 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sjsucmpe202.artemis.onlinebankingsystem.enums.StatusType;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -10,13 +11,17 @@ public class RefundRequests {
 
 
     @Id
-
     String requestId;
-    String id;
     Integer amount;
     String firstName;
     String lastName;
     Long accountNumber;
     String reason;
-    String status;
+    StatusType status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    @JsonIgnore
+    Customer customer;
+
+
 }

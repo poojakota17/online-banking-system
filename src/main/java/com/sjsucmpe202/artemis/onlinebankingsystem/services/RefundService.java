@@ -1,43 +1,51 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.services;
 
 
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Customer;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.RefundRequests;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.StatusType;
+import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.CustomerRepository;
 import com.sjsucmpe202.artemis.onlinebankingsystem.repositories.RefundRequestsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
 public class RefundService {
 
-    @Autowired
+
     private RefundRequestsRepository refundRequestsRepository;
+    private CustomerRepository customerRepository;
+    private RefundRequests refundRequests;
 
-    public Iterable<RefundRequests> getRefundRequestsByStatus(String status){
+    public RefundService(RefundRequestsRepository refundRequestsRepository,CustomerRepository customerRepository){
+        this.customerRepository=customerRepository;
+        this.refundRequestsRepository=refundRequestsRepository;
+    }
 
+    public Iterable<RefundRequests> getRefundRequestsByStatus(StatusType status){
         return refundRequestsRepository.findRefundRequestsByStatusEquals(status);
     }
 
-
-
-    public List<RefundRequests> getRefundRequestbyId(String id){
-        List<RefundRequests> requestsList= new ArrayList<>();
-         refundRequestsRepository.getrequests(id).forEach(requestsList::add);
-        return  requestsList;
-
+    public Iterable<RefundRequests> getRefundRequestById(String id){
+        return  refundRequestsRepository.findByCustomerId(id);
     }
-    public void addRefundRequests(RefundRequests refundRequests){
-        refundRequests.setRequestId(UUID.randomUUID().toString());
-        refundRequests.setStatus(StatusType.OPEN.toString());
-        refundRequestsRepository.save(refundRequests);
+    public RefundRequests addRefundRequests(RefundRequests refundRequests,String customerId){
+
+            refundRequests.setRequestId(UUID.randomUUID().toString());
+            refundRequests.setStatus(StatusType.OPEN);
+            Customer customer;
+            customer= customerRepository.findById(customerId).get();
+            refundRequests.setCustomer(customer);
+            refundRequests.setFirstName(customer.getFirstName());
+            refundRequests.setLastName(customer.getLastName());
+            return refundRequestsRepository.save(refundRequests);
     }
 
-    public void updateRefundRequest(String requestId){
-    refundRequestsRepository.setRequestStatusByRequestId(requestId);
+    public RefundRequests updateRefundRequest(String requestId){
+        refundRequests= refundRequestsRepository.findById(requestId).get();
+        refundRequests.setStatus(StatusType.CLOSE);
+         return refundRequestsRepository.save(refundRequests);
     }
 }
 

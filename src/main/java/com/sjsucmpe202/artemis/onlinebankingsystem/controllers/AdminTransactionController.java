@@ -1,10 +1,9 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.RefundRequests;
+import com.sjsucmpe202.artemis.onlinebankingsystem.enums.StatusType;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.RefundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/getrefundrequest")
@@ -12,25 +11,30 @@ public class AdminTransactionController {
 
     @Autowired
     private RefundService refundService;
+    private RefundRequests refundRequests;
+
+
+
    @GetMapping
-    public Iterable<RefundRequests> getOpenRefundRequestsLists(@RequestParam String status){
+    public Iterable<RefundRequests> getOpenRefundRequestsLists(@RequestParam StatusType status){
         return refundService.getRefundRequestsByStatus(status);
     }
 
 
-    @PostMapping
-    public void addRefundRequests(@RequestBody RefundRequests refundRequests){
-       refundService.addRefundRequests(refundRequests);
+    @PostMapping("/{customerId}")
+    public RefundRequests addRefundRequests(@RequestBody RefundRequests refundRequests,@PathVariable String customerId){
+      return refundService.addRefundRequests(refundRequests,customerId);
     }
     @GetMapping("/customerid")
-    public List<RefundRequests> getRefundRequestsByCustomerId(@RequestParam String id){
+    public Iterable<RefundRequests> getRefundRequestsByCustomerId(@RequestParam String id){
 
-       return refundService.getRefundRequestbyId(id);
+       return refundService.getRefundRequestById(id);
     }
     @PutMapping("/requestid")
-    public void updateRefundStatus(@RequestParam String requestId)
+    public RefundRequests updateRefundStatus(@RequestParam String requestId)
     {
-        refundService.updateRefundRequest(requestId);
+
+        return refundService.updateRefundRequest(requestId);
     }
 
 }
