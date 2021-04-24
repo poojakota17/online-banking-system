@@ -1,6 +1,8 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.ExternalTransactionTemplate;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.TransactionTemplate;
+import com.sjsucmpe202.artemis.onlinebankingsystem.services.ExternalTransactionTemplateService;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionTemplateService;
 
 import java.time.LocalDate;
@@ -19,11 +21,13 @@ public class TransactionController {
 
 	private TransactionService transactionService;
 	private TransactionTemplateService templateService;
+	private ExternalTransactionTemplateService externalTransactionTemplateService;
 
 	@Autowired
-	public TransactionController(TransactionService transactionService, TransactionTemplateService templateService) {
+	public TransactionController(TransactionService transactionService, TransactionTemplateService templateService, ExternalTransactionTemplateService externalTransactionTemplateService) {
 		this.transactionService = transactionService;
 		this.templateService = templateService;
+		this.externalTransactionTemplateService = externalTransactionTemplateService;
 	}
 
 	@PostMapping("/{accountId}")
@@ -52,5 +56,15 @@ public class TransactionController {
 			@RequestParam("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
 			@PathVariable String accountId) throws Exception {
 		return transactionService.findAllTransactionsByDate(fromDate,toDate, accountId);
+	}
+
+	@PostMapping("/external_transaction")
+	public ExternalTransactionTemplate save(@RequestParam String fromAccountId, @RequestParam String toAccountNumber, @RequestBody ExternalTransactionTemplate externalTransactionTemplate){
+		return externalTransactionTemplateService.save(externalTransactionTemplate, fromAccountId, toAccountNumber);
+	}
+
+	@PostMapping("/one_time_external")
+	public void saveOneTimeExternalTransaction(@RequestBody ExternalTransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam String toAccountNumber){
+		externalTransactionTemplateService.saveOnetimeExternalTransaction(transactionTemplate, fromAccountId, toAccountNumber);
 	}
 }

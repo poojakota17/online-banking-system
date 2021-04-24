@@ -1,5 +1,6 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.mappers;
 
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.ExternalTransactionTemplate;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.Transaction;
 import com.sjsucmpe202.artemis.onlinebankingsystem.entities.TransactionTemplate;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.OperationsType;
@@ -28,6 +29,16 @@ public class TransactionMapper {
         transaction.setTransactionAmount(transactionTemplate.getTxnAmount());
         transaction.setOperationsType(transactionTemplate.getOperationsType());
         transaction.setTransactionType(TransactionType.CREDIT);
+        return transaction;
+    }
+
+    public Transaction toTransactionDTOForFromAccount(ExternalTransactionTemplate transactionTemplate){
+        Transaction transaction = new Transaction();
+        transaction.setBankAccount(transactionTemplate.getBankAccount());
+        transaction.setMemo(transactionTemplate.getMemo());
+        transaction.setTransactionAmount(transactionTemplate.getTxnAmount().negate());
+        transaction.setOperationsType(transactionTemplate.getOperationsType());
+        transaction.setTransactionType(TransactionType.DEBIT);
         return transaction;
     }
 }

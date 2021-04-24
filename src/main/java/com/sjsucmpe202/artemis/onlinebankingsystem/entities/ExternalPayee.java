@@ -13,8 +13,8 @@ public class ExternalPayee {
     @Id
     private String id;
     private String accountHolderName;
-    private Long accountNumber;
-    private Long accountRoutingNumber;
+    private String accountNumber;
+    private String accountRoutingNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
