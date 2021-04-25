@@ -1,17 +1,15 @@
 package com.sjsucmpe202.artemis.onlinebankingsystem.controllers;
 
-import com.sjsucmpe202.artemis.onlinebankingsystem.entities.RefundRequests;
+import com.sjsucmpe202.artemis.onlinebankingsystem.entities.RefundRequest;
 import com.sjsucmpe202.artemis.onlinebankingsystem.enums.StatusType;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.RefundService;
 import com.sjsucmpe202.artemis.onlinebankingsystem.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 @CrossOrigin
-@RequestMapping("/api/getrefundrequest")
+@RequestMapping("/api/refundrequest")
 public class AdminTransactionController {
 
     @Autowired
@@ -26,18 +24,18 @@ public class AdminTransactionController {
    }
 
    @GetMapping
-    public Iterable<RefundRequests> getOpenRefundRequestsLists(@RequestParam StatusType status){
+    public Iterable<RefundRequest> getOpenRefundRequestsLists(@RequestParam StatusType status){
         return refundService.getRefundRequestsByStatus(status);
     }
 
 
     @PostMapping("/{customerId}")
-    public RefundRequests addRefundRequests(@RequestBody RefundRequests refundRequests,@PathVariable String customerId){
-      return refundService.addRefundRequests(refundRequests,customerId);
+    public RefundRequest addRefundRequests(@RequestBody RefundRequest refundRequest, @PathVariable String customerId){
+      return refundService.save(refundRequest,customerId);
     }
 
     @GetMapping("/customerid")
-    public Iterable<RefundRequests> getRefundRequestsByCustomerId(@RequestParam String id){
+    public Iterable<RefundRequest> getRefundRequestsByCustomerId(@RequestParam String id){
        return refundService.getRefundRequestById(id);
     }
 
@@ -47,7 +45,7 @@ public class AdminTransactionController {
 //    }
 
     @PostMapping("/toandfromrefundprocess")
-    public void toAndFromRefundProcessTransaction(@RequestParam String requestId,@RequestParam String accountNo, @RequestParam BigDecimal amount){
-        transactionService.toAndFromTransactionByAdmin(requestId,accountNo,amount);
+    public void toAndFromRefundProcessTransaction(@RequestBody RefundRequest refundRequest, @RequestParam String accountNo){
+        transactionService.toAndFromTransactionByAdmin(refundRequest, accountNo);
     }
 }

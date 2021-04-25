@@ -4,15 +4,14 @@ import com.sjsucmpe202.artemis.onlinebankingsystem.enums.StatusType;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Data
-public class RefundRequests {
-
-
+public class RefundRequest {
     @Id
     String requestId;
-    Integer amount;
+    BigDecimal amount;
     String firstName;
     String lastName;
     String accountNumber;
@@ -22,6 +21,4 @@ public class RefundRequests {
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     Customer customer;
-
-
 }
