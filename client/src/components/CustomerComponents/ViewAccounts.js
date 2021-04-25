@@ -6,14 +6,20 @@ import Button from "react-bootstrap/Button";
 //import { getTransactions } from "../../actions/transactionActions";
 import Zoom from "react-reveal/Zoom";
 import Pool from "../../UserPool";
+import ReactPaginate from 'react-paginate';
 class ViewAccounts extends Component {
   constructor(props) {
     super(props);
     this.state = {
       accounts: [],
-      activeAccount: null
+      activeAccount: null,
+      currentPage:0
     };
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
+  handlePageClick({ selected: selectedPage }) {
+    this.setState({currentPage:selectedPage});
+ }
   async componentDidMount() {
     const user = Pool.getCurrentUser();
     if (user) {
@@ -30,6 +36,23 @@ class ViewAccounts extends Component {
 
   render() {
     console.log(this.props.accounts);
+    const PER_PAGE = 7;
+        const offset = this.state.currentPage * PER_PAGE;
+        const currentPageData = this.state.accounts
+            .slice(offset, offset + PER_PAGE)
+            .map((account) => (
+              <tr key = {account.id}>
+                 <td> { account.accountNumber} </td>   
+                 <td> {account.accountOpenDate}</td>
+                 <td> {account.accountBalance}</td>
+                 <td> {account.accountRoutingNumber} </td>   
+                 <td> {account.accountType}</td>
+                 <td>
+                 <Button variant="secondary" size="sm" onClick={() => this.viewTransactions(account.id)}>View Transactions</Button>
+                 </td>
+             </tr>
+           ))
+        const pageCount = Math.ceil(this.state.accounts.length / PER_PAGE);
     return (
       <div>
         <header className="pageHeader">
@@ -52,20 +75,24 @@ class ViewAccounts extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.accounts.map((account) => (
-                     <tr key = {account.id}>
-                        <td> { account.accountNumber} </td>   
-                        <td> {account.accountOpenDate}</td>
-                        <td> {account.accountBalance}</td>
-                        <td> {account.accountRoutingNumber} </td>   
-                        <td> {account.accountType}</td>
-                        <td>
-                        <Button variant="secondary" size="sm" onClick={() => this.viewTransactions(account.id)}>View Transactions</Button>
-                        </td>
-                    </tr>
-                  ))}
+                  {currentPageData}
                 </tbody>
               </table>
+              {this.state.accounts.length > PER_PAGE ?
+                                   <div className="marginBuffer">
+                                   <ReactPaginate
+                       previousLabel={"← Previous"}
+                       nextLabel={"Next →"}
+                       pageCount={pageCount}
+                       onPageChange={this.handlePageClick}
+                       containerClassName={"pagination"}
+                       previousLinkClassName={"pagination__link"}
+                       nextLinkClassName={"pagination__link"}
+                       disabledClassName={"pagination__link--disabled"}
+                       activeClassName={"pagination__link--active"}
+                   />
+                   </div> : null
+                            }
             </div>
           </Container>
         </div>  

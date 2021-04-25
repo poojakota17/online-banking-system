@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import { saveRequest ,getRequests} from "../../actions/refundActions";
 import { connect } from "react-redux";
 import { getAccounts } from '../../actions/accountActions';
+import ReactPaginate from 'react-paginate';
 class RequestRefund extends Component {
     constructor(props) {
         super(props);
@@ -21,16 +22,17 @@ class RequestRefund extends Component {
             accountNumber: "",
             amount: "",
             reason: "",
-            accounts:[
-                {accountNumber:12111111111111212},
-                {accountNumber:12111111111111132},
-                {accountNumber:56564444444444444}
-            ]
+            accounts:[],
+            currentPage:0
         };
         this.changeProductCategoryHandler = this.changeProductCategoryHandler.bind(
             this
           );
+          this.handlePageClick = this.handlePageClick.bind(this);
     }
+    handlePageClick({ selected: selectedPage }) {
+        this.setState({currentPage:selectedPage});
+     }
     async componentDidMount() {
         
         const user = Pool.getCurrentUser();
@@ -92,6 +94,19 @@ class RequestRefund extends Component {
         
     }
     render() {
+        const PER_PAGE = 7;
+        const offset = this.state.currentPage * PER_PAGE;
+        const currentPageData = this.state.refundrequests
+            .slice(offset, offset + PER_PAGE)
+            .map((request) => (
+                <tr key={request.requestId}>
+                    <td> {request.accountNumber} </td>
+                    <td> {request.amount}</td>
+                    <td> {request.reason}</td>
+                    <td> {request.status} </td>
+                </tr>
+            ))
+        const pageCount = Math.ceil(this.state.refundrequests.length / PER_PAGE);
         return (
             <div>
                 <header className="pageHeader">
@@ -120,16 +135,24 @@ class RequestRefund extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.refundrequests.map((request) => (
-                                            <tr key={request.requestId}>
-                                                <td> {request.accountNumber} </td>
-                                                <td> {request.amount}</td>
-                                                <td> {request.reason}</td>
-                                                <td> {request.status} </td>
-                                            </tr>
-                                        ))}
+                                        {currentPageData}
                                     </tbody>
                                 </table>
+                                {this.state.refundrequests.length > PER_PAGE ?
+                                   <div className="marginBuffer">
+                                   <ReactPaginate
+                       previousLabel={"← Previous"}
+                       nextLabel={"Next →"}
+                       pageCount={pageCount}
+                       onPageChange={this.handlePageClick}
+                       containerClassName={"pagination"}
+                       previousLinkClassName={"pagination__link"}
+                       nextLinkClassName={"pagination__link"}
+                       disabledClassName={"pagination__link--disabled"}
+                       activeClassName={"pagination__link--active"}
+                   />
+                   </div> : null
+                            }
                             </div>
                         </Container>
                     </div>

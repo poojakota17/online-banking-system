@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { saveExtPayee, getExternalPayees } from "../../actions/externalPayeeActions";
 import { connect } from "react-redux";
+import ReactPaginate from 'react-paginate';
 class AddExternalPayee extends Component {
     constructor(props) {
         super(props);
@@ -17,9 +18,14 @@ class AddExternalPayee extends Component {
             showNewExtPayeeModal: false,
             accountHolderName: "",
             accountNumber: "",
-            accountRoutingNumber: ""
+            accountRoutingNumber: "",
+            currentPage:0
         };
+        this.handlePageClick = this.handlePageClick.bind(this);
     }
+    handlePageClick({ selected: selectedPage }) {
+        this.setState({currentPage:selectedPage});
+     }
     async componentDidMount() {
         const user = Pool.getCurrentUser();
         if (user) {
@@ -60,6 +66,18 @@ class AddExternalPayee extends Component {
         })
     }
     render() {
+        const PER_PAGE = 7;
+        const offset = this.state.currentPage * PER_PAGE;
+        const currentPageData = this.state.externalPayees
+            .slice(offset, offset + PER_PAGE)
+            .map((payee) => (
+                <tr key={payee.id}>
+                    <td> {payee.accountHolderName} </td>
+                    <td> {payee.accountNumber}</td>
+                    <td> {payee.accountRoutingNumber}</td>
+                </tr>
+            ))
+        const pageCount = Math.ceil(this.state.externalPayees.length / PER_PAGE);
         return (
             <div>
                 <header className="pageHeader">
@@ -88,15 +106,24 @@ class AddExternalPayee extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.externalPayees.map((payee) => (
-                                            <tr key={payee.id}>
-                                                <td> {payee.accountHolderName} </td>
-                                                <td> {payee.accountNumber}</td>
-                                                <td> {payee.accountRoutingNumber}</td>
-                                            </tr>
-                                        ))}
+                                        {currentPageData}
                                     </tbody>
                                 </table>
+                                {this.state.externalPayees.length > PER_PAGE ?
+                                   <div className="marginBuffer">
+                                   <ReactPaginate
+                       previousLabel={"← Previous"}
+                       nextLabel={"Next →"}
+                       pageCount={pageCount}
+                       onPageChange={this.handlePageClick}
+                       containerClassName={"pagination"}
+                       previousLinkClassName={"pagination__link"}
+                       nextLinkClassName={"pagination__link"}
+                       disabledClassName={"pagination__link--disabled"}
+                       activeClassName={"pagination__link--active"}
+                   />
+                   </div> : null
+                            }
                             </div>
                         </Container>
                     </div>

@@ -3,10 +3,7 @@
     width: 294px;
   }
 
-tbody {
-    height: 300px;
-    overflow-y: auto;
-}
+
   #header .pro-sidebar {
     height: 100vh;
   }

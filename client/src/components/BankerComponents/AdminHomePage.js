@@ -7,7 +7,7 @@ import ViewCustomerDetails from './ViewCustomerDetails';
 import BankerDefaultHome from "./BankerDefaultHome";
 import ViewAccounts from "./ViewAccounts";
 import AddNewAccount from "./AddNewAccount";
-
+import AdminViewTransactions from './AdminViewTransactions';
 class AdminHomePage extends Component{
     constructor(props) {
         super(props);
@@ -29,7 +29,7 @@ class AdminHomePage extends Component{
                     <Route path="/bankerhome/viewaccounts/:id"  component={ViewAccounts} />
                     <Route path="/bankerhome/processrefunds" component={ProcessRefund} />
                     <Route path="/bankerhome/addcustomer" component={AddCustomer}/>
-
+                    <Route path="/bankerhome/viewtransactions/:id"  component={AdminViewTransactions} />
                     <Route path="/bankerhome/viewcustomer/:id" component={ViewCustomerDetails}/>
                     <Route path="/bankerhome/registeraccount/:id" component={AddNewAccount}/>
                 </Switch>
