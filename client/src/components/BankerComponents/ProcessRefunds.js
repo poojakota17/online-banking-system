@@ -6,7 +6,7 @@ import Zoom from "react-reveal/Zoom";
 import Pool from "../../UserPool";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import { getOpenRequests, getClosedRequests } from "../../actions/refundActions";
+import { getOpenRequests, getClosedRequests,closeRequest } from "../../actions/refundActions";
 import { connect } from "react-redux";
 class ProcessRefunds extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ class ProcessRefunds extends Component {
         this.setState({ openRequests: this.props.refundRequests.openRefundRequests });
         await this.props.getClosedRequests();
         console.log(this.props.refundRequests.closedRefundRequests);
-        this.setState({ accounts: this.props.refundRequests.closedRefundRequests });
+        this.setState({ closedRequests: this.props.refundRequests.closedRefundRequests });
     }
 
     onValueChange = (event) => {
@@ -39,7 +39,9 @@ class ProcessRefunds extends Component {
 
         console.log(request);
         //Call API to do the transaction and close
-
+        this.props.closeRequest(request , request.accountNumber).then(res=> {
+            this.props.history.push("/bankerhome");
+        })
     }
     
     render() {
@@ -132,7 +134,7 @@ class ProcessRefunds extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.openRequests.map((request) => (
+                                        {this.state.closedRequests.map((request) => (
                                             <tr key={request.requestId}>
                                                <td> {request.accountNumber}</td>
                                                 <td> {request.firstName} {" "}{request.lastName}</td>
@@ -161,5 +163,5 @@ function mapStateToProps({ refundRequests }) {
 }
 
 export default connect(mapStateToProps, {
-    getOpenRequests, getClosedRequests
+    getOpenRequests, getClosedRequests,closeRequest
 })(ProcessRefunds);

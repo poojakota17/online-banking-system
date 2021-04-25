@@ -7,7 +7,7 @@ import DefaultHomePage from './DefaultHomePage';
 import NewTransaction from './NewTransaction';
 import ViewAccounts from './ViewAccounts';
 import RequestRefund from "./RequestRefund";
-
+import ViewTransactions from './ViewTransactions';
 class ClientHomePage extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +35,7 @@ class ClientHomePage extends Component {
             component={NewTransaction}
           />
           <Route path="/customerhome/myprofile" component={CustomerProfile} />
-          
+          <Route path="/customerhome/viewtransactions/:id"  component={ViewTransactions} />
           <Route path="/customerhome/requestrefund" component={RequestRefund} />
         </Switch>
       </div>

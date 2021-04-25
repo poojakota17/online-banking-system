@@ -189,11 +189,11 @@ class RequestRefund extends Component {
                                   return (
                                     <option value={account.accountNumber} selected="selected">
                                       {" "}
-                                      {account.accountType}{" "}
+                                      {account.accountNumber}{" "}
                                     </option>
                                   );
                                 } else {
-                                  return <option value={account.accountNumber}> {account.accountType} </option>;
+                                  return <option value={account.accountNumber}> {account.accountNumber} </option>;
                                 }
                               })}
                             </select>
