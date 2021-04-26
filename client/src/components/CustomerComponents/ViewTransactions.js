@@ -8,6 +8,9 @@ import Col from "react-bootstrap/Col";
 import moment from 'moment';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
+import DatePicker from 'react-datepicker';
+import { subDays } from 'date-fns';
+
 class NewTransaction extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +19,10 @@ class NewTransaction extends Component {
         fromDate:"",
         toDate:"",
         transactions:[],
-        currentPage:0
+        currentPage:0,
+        today:"",
+        dateBefore18months:""
+
     };
     this.handlePageClick = this.handlePageClick.bind(this);
 }
@@ -25,18 +31,32 @@ handlePageClick({ selected: selectedPage }) {
  }
 async componentDidMount() {
   console.log(this.state.id);
+  var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var day2 = day;
+    var month2 = (month+6) % 12;
+    var year2 = "";
+    if(month > 6){
+        year2 = year - 1;
+    }
+    else{
+        year2 = year - 2;
+    }
+
+    let today = year+"-"+("0" + month).slice(-2)+"-"+("0" + day).slice(-2);
+    let dayPast18months = year2+"-"+("0" + month2).slice(-2)+"-"+("0" + day2).slice(-2);
+    this.setState({today:today,dateBefore18months:dayPast18months});
+  
 }
 back = () => {
     this.props.history.push("/customerhome/accounts");
 }
 fetch = () => {
-    const newFromDate =  moment(moment(this.state.fromDate,'yyyy-MM-DD')).format('yyyy-MM-DD');
-    const newToDate =  moment(moment(this.state.toDate,'yyyy-MM-DD')).format('yyyy-MM-DD');
-    console.log(this.state.id,newFromDate,newToDate);
-
-
+    console.log(this.state);
     axios.get(process.env.REACT_APP_URL + "/api/transaction/view/"+this.state.id,
-    { params: { fromDate: newFromDate, toDate: newToDate } }).then(res => {
+    { params: { fromDate: this.state.fromDate, toDate: this.state.toDate } }).then(res => {
         console.log(res.data);
         this.setState({transactions: res.data})
       });
@@ -59,7 +79,7 @@ render() {
             </tr>
         ))
     const pageCount = Math.ceil(this.state.transactions.length / PER_PAGE);
-    console.log(this.state.transactions);
+    console.log(this.state);
   return (
     <div>
       <header className="pageHeader">
@@ -71,17 +91,18 @@ render() {
         <br/>
         <br/>
         <Container>
-<Form className=" marginBuffer">
+
+       <Form className=" marginBuffer">
         <Form.Row>
         <Form.Group as={Col} controlId="dob">
                             <Form.Label>F R O M  &nbsp;&nbsp; D A T E</Form.Label>
-                            <Form.Control type="date" name="dob" placeholder="Date of Birth" 
-                            onChange={(event) => this.setState({ fromDate: event.target.value })}/>
+                            <Form.Control type="date" name="dob" placeholder="Date of Birth" min={this.state.dateBefore18months} max={this.state.today}
+                            onChange={(event) => this.setState({ fromDate: moment(moment(event.target.value,'yyyy-MM-DD')).format('yyyy-MM-DD') })}/>
                         </Form.Group>
           <Form.Group as={Col} controlId="dob">
                             <Form.Label>T O  &nbsp;&nbsp; D A T E</Form.Label>
-                            <Form.Control type="date" name="dob" placeholder="Date of Birth" 
-                            onChange={(event) => this.setState({ toDate: event.target.value })}/>
+                            <Form.Control type="date" name="dob" placeholder="Date of Birth"  min={this.state.fromDate}  max={this.state.today}
+                            onChange={(event) => this.setState({ toDate: moment(moment(event.target.value,'yyyy-MM-DD')).format('yyyy-MM-DD') })}/>
                         </Form.Group>
                         <Form.Group as={Col} controlId="dob">
                         <Button size="sm" className="center marginBuffer" variant="secondary" onClick={() => this.fetch()}> Fetch Transactions</Button>
