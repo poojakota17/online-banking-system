@@ -35,10 +35,10 @@ public class ExternalTransactionTemplateService {
         this.externalTransactionTemplateRepository = externalTransactionTemplateRepository;
     }
 
-    public ExternalTransactionTemplate save(ExternalTransactionTemplate transactionTemplate, String fromAccountId, String toAccountNumber){
+    public ExternalTransactionTemplate save(ExternalTransactionTemplate transactionTemplate, String fromAccountId, String toExternalPayeeId){
         transactionTemplate.setExternal_txn_template_id(UUID.randomUUID().toString());
         BankAccount fromAccount = accountRepository.findById(fromAccountId).get();
-        ExternalPayee externalPayee = externalPayeeRepository.findById(toAccountNumber).get();
+        ExternalPayee externalPayee = externalPayeeRepository.findById(toExternalPayeeId).get();
         transactionTemplate.setBankAccount(fromAccount);
         transactionTemplate.setExternalPayee(externalPayee);
         if(transactionTemplate.getStartDate().equals(LocalDate.now())){
@@ -51,9 +51,9 @@ public class ExternalTransactionTemplateService {
 
     @Transactional
     public void saveOnetimeExternalTransaction(ExternalTransactionTemplate transactionTemplate, String fromAccountId,
-                                       String toAccountNumber) {
+                                       String toExternalPayeeId) {
         BankAccount fromAccount = accountRepository.findById(fromAccountId).get();
-        ExternalPayee toAccount = externalPayeeRepository.findById(toAccountNumber).get();
+        ExternalPayee toAccount = externalPayeeRepository.findById(toExternalPayeeId).get();
         // Create TXN
         if(toAccount != null) {
             Transaction fromTxn = transactionMapper.toTransactionDTOForFromAccount(transactionTemplate);

@@ -6,9 +6,10 @@ import Zoom from "react-reveal/Zoom";
 import Pool from "../../UserPool";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import { connect } from "react-redux";
 import { getAccounts } from '../../actions/accountActions';
 import { getExternalPayees } from "../../actions/externalPayeeActions";
+import { saveExternalReccurTxn, saveReccurTxn, saveOneTimeTxn, saveExternalOneTimeTxn } from "../../actions/transactionActions";
+import { connect } from "react-redux";
 
 class NewTransaction extends Component {
   constructor(props) {
@@ -17,11 +18,12 @@ class NewTransaction extends Component {
         
         show: true,
         showNewRequestModal: false,
-        fromAccountNumber: "",
         toAccountNumber: "",
         transaction:"",
-        transactionType:"",
-        amount: "",
+        frequency:"",
+        operationsType:"",
+        txnAmount: "",
+        memo:"",
         accounts:[
             {fromAccountNumber:12111111111111212},
             {fromAccountNumber:12111111111111132},
@@ -42,6 +44,7 @@ async componentDidMount() {
       await this.props.getAccounts(userId);
       console.log(this.props.accounts);
       this.setState({ accounts: this.props.accounts.accounts });
+      
       await this.props.getExternalPayees(userId);
             console.log(this.props.externalPayees);
             this.setState({ externalPayees: this.props.externalPayees.externalPayees });
@@ -49,31 +52,31 @@ async componentDidMount() {
 }
 
 handleChange = (event) => {
-  this.setState({fromAccountNumber: event.target.value});
+  this.setState({accountId: event.target.value});
 }
 
 handleChangeExternal = (event) => {
-  this.setState({fromAccountNumber: event.target.value});
+  this.setState({accountId: event.target.value});
 }
 
 handleChangeTransactionType = (event) => {
-  this.setState({transactionType: event.target.value});
+  this.setState({frequency: event.target.value});
 }
 
 handleChangeOperationType = (event) => {
-  this.setState({operationType: event.target.value});
+  this.setState({operationsType: event.target.value});
 }
 
 handleChangeTransactionTypeExternal = (event) => {
-  this.setState({transactionType: event.target.value});
+  this.setState({frequency: event.target.value});
 }
 
 handleChangeOperationTypeExternal = (event) => {
-  this.setState({operationType: event.target.value});
+  this.setState({operationsType: event.target.value});
 }
 
 handleChangeExternalAccount = (event) => {
-  this.setState({ toAccountNumber: event.target.value });
+  this.setState({ toExternalPayeeId: event.target.value });
 };
 
   openModal = () => {
@@ -91,22 +94,24 @@ openModalExternal = () => {
 closeModal = () => {
   this.setState({ 
       showNewRequestModal: false,
-      fromAccountNumber: "",
+      accountId: "",
       toAccountNumber: "",
-      transactionType: "",
-      operationType: "",
-      amount: ""
+      frequency: "",
+      operationsType: "",
+      txnAmount: "",
+      memo: ""
    });
 };
 
 closeModalExternal = () => {
   this.setState({ 
       showNewRequestModalExternal: false,
-      fromAccountNumber: "",
-      toAccountNumber: "",
-      transactionType: "",
-      operationType: "",
-      amount: ""
+      accountId: "",
+      toExternalPayeeId: "",
+      frequency: "",
+      operationsType: "",
+      txnAmount: "",
+      memo: ""
    });
 };
 
@@ -114,32 +119,116 @@ onSubmit = () => {
   this.closeModal();
   const user = Pool.getCurrentUser();
   let userId = user.getUsername();
-  let requestObject = {
-    fromAccountNumber: this.state.fromAccountNumber,
-    toAccountNumber: this.state.toAccountNumber,
-    transactionType: this.state.transactionType,
-    operationType: this.state.operationType,
-    startDate: this.state.startDate,
-    amount: this.state.amount
+
+  if(this.state.frequency !== "ONE_TIME" && this.state.frequency !== "") {
+    let requestReccurTxnObject = {
+      toAccountNumber: this.state.toAccountNumber,
+      frequency: this.state.frequency,
+      operationsType: this.state.operationsType,
+      startDate: this.state.startDate,
+      txnAmount: this.state.txnAmount,
+      memo: this.state.memo
+    }
+
+    console.log(requestReccurTxnObject);
+    this.props.saveReccurTxn(requestReccurTxnObject,this.state.accountId).then(res=> {
+      this.props.history.push("/customerhome");
+    })
   }
 
-  console.log(requestObject);
+  else {
+    let requestTxnObject = {
+      toAccountNumber: this.state.toAccountNumber,
+      frequency: this.state.frequency,
+      operationsType: this.state.operationsType,
+      txnAmount: this.state.txnAmount,
+      memo: this.state.memo
+    }
+  
+    console.log(requestTxnObject);
+    this.props.saveOneTimeTxn(requestTxnObject,this.state.accountId).then(res=> {
+      this.props.history.push("/customerhome");
+    })
+  }
+ 
+}
+
+saveReccurTxn = () => {
+  let requestReccurTxnObject = {
+    toAccountNumber: this.state.toAccountNumber,
+    frequency: this.state.frequency,
+    operationsType: this.state.operationsType,
+    startDate: this.state.startDate,
+    txnAmount: this.state.txnAmount,
+    memo: this.state.memo
+  }
+}
+
+saveOneTimeTxn = () => {
+  let requestTxnObject = {
+    toAccountNumber: this.state.toAccountNumber,
+    frequency: this.state.frequency,
+    operationsType: this.state.operationsType,
+    txnAmount: this.state.txnAmount,
+    memo: this.state.memo
+  }
 }
 
 onSubmitExternal = () => {
   this.closeModalExternal();
   const user = Pool.getCurrentUser();
   let userId = user.getUsername();
-  let requestObject = {
-    fromAccountNumber: this.state.fromAccountNumber,
-    toAccountNumber: this.state.toAccountNumber,
-    transactionType: this.state.transactionType,
-    startDate: this.state.startDate,
-    operationType: this.state.operationType,
-    amount: this.state.amount
+
+  if(this.state.frequency !== "ONE_TIME" && this.state.frequency !== "") {
+    let requestExtRecurrObject = {
+      frequency: this.state.frequency,
+      startDate: this.state.startDate,
+      operationsType: this.state.operationsType,
+      txnAmount: this.state.txnAmount,
+      memo: this.state.memo
+    }
+  
+    console.log(requestExtRecurrObject);
+    console.log(this.state.accountId);
+    this.props.saveExternalReccurTxn(requestExtRecurrObject,this.state.accountId,this.state.toExternalPayeeId).then(res=> {
+      this.props.history.push("/customerhome");
+    })
   }
 
-  console.log(requestObject);
+  else {
+    let requestExtOneTimeObject = {
+      frequency: this.state.frequency,
+      operationsType: this.state.operationsType,
+      txnAmount: this.state.txnAmount,
+      memo: this.state.memo
+    }
+  
+    console.log(requestExtOneTimeObject);
+    console.log(this.state.accountId);
+    this.props.saveExternalOneTimeTxn(requestExtOneTimeObject,this.state.accountId,this.state.toExternalPayeeId).then(res=> {
+      this.props.history.push("/customerhome");
+    })
+  }
+
+}
+
+saveExternalReccurTxn = () => {
+  let requestExtRecurrObject = {
+    frequency: this.state.frequency,
+    startDate: this.state.startDate,
+    operationsType: this.state.operationsType,
+    txnAmount: this.state.txnAmount,
+    memo: this.state.memo
+  }
+}
+
+saveExternalOneTimeTxn = () => {
+  let requestExtOneTimeObject = {
+    frequency: this.state.frequency,
+    operationsType: this.state.operationsType,
+    txnAmount: this.state.txnAmount,
+    memo: this.state.memo
+  }
 }
 
 render() {
@@ -170,26 +259,32 @@ render() {
                   <div>
                       <Container>
 
-                          <Form className="marginBuffer" onSubmit={this.onSubmit}>
+                          <Form className="marginBuffer" onSubmit={this.onSubmit} >
                                     
-                              <Form.Row>
-                                  <Form.Group as={Col} controlId="formfromaccount">
-                                      <Form.Label>From Account Number</Form.Label> 
-                                          <select value="Select Account" onChange={this.handleChange}>
-                                          <option value="">--Select One--</option>
-                                          {this.state.accounts.map((account) => (
-                                  <option value={account.accountnumber}>{account.fromAccountNumber}</option>
-                                          ))}
-                                          </select>
-                                      <Form.Control
-                                          required
-                                          type="number"
-                                          placeholder="Enter From AccountNumber"
-                                          value={this.state.fromAccountNumber}
-                                          onChange={(event) => this.setState({ fromAccountNumber: event.target.value })}
-                                      />
-                                  </Form.Group>
-                              </Form.Row>
+                          <div className="form-group">
+                          <label> Choose Account Number </label>
+                          <select
+                            name="category"
+                            className="form-control"
+                            onChange={this.handleChange}
+                          >
+                          <option value="">
+                              {" "}
+                              Please choose an Account{" "}
+                          </option>
+                          {this.state.accounts.map((account) => {
+                          if (this.state.accountId === account.id) {
+                             return (
+                              <option value={account.id} selected="selected">
+                              {account.accountNumber}{" "}
+                          </option>
+                        );
+                      } else {
+                        return <option value={account.id}> {account.accountNumber} </option>;
+                      }
+                    })}
+                  </select>
+                </div>
                               <Form.Row>
                               <Form.Group as={Col} controlId="formtoaccount">
                                   <Form.Label>To Account Number</Form.Label>
@@ -208,7 +303,7 @@ render() {
                                   <Form.Label>Transaction Type</Form.Label>
                                   <select value="Select Transaction Type" onChange={this.handleChangeTransactionType}>
                                           <option value="">--Select One--</option>
-                                          <option value="ONE-TIME">One-Time</option> 
+                                          <option value="ONE_TIME">One-Time</option> 
                                           <option value="DAILY">DAILY</option>
                                           <option value="WEEKLY">WEEKLY</option>
                                           <option value="MONTHLY">MONTHLY</option>
@@ -218,12 +313,12 @@ render() {
                                       required
                                       type="text"
                                       placeholder="Transaction Type"
-                                      value={this.state.transactionType}
-                                      onChange={(event) => this.setState({ transactionType: event.target.value })}
+                                      value={this.state.frequency}
+                                      onChange={(event) => this.setState({ frequency: event.target.value })}
                                 />
                               </Form.Group>
 
-                              {this.state.transactionType !== "ONE-TIME" && this.state.transactionType !== "" ? (
+                              {this.state.frequency !== "ONE_TIME" && this.state.frequency !== "" ? (
                                 <>
                                 <Form.Row>
                                   <Form.Group as={Col} controlId="formstartdate">
@@ -253,8 +348,8 @@ render() {
                                       required
                                       type="text"
                                       placeholder="Operation Type"
-                                      value={this.state.operationType}
-                                      onChange={(event) => this.setState({ operationType: event.target.value })}
+                                      value={this.state.operationsType}
+                                      onChange={(event) => this.setState({ operationsType: event.target.value })}
                                 />
                               </Form.Group>
                               </Form.Row>
@@ -266,10 +361,21 @@ render() {
                                       required
                                       type="number"
                                       placeholder="Enter Amount"
-                                      value={this.state.amount}
-                                      onChange={(event) => this.setState({ amount: event.target.value })}
+                                      value={this.state.txnAmount}
+                                      onChange={(event) => this.setState({ txnAmount: event.target.value })}
                                 />
                               </Form.Group>
+                              
+                              <Form.Group as={Col} controlId="formmemo">
+                                  <Form.Label>Memo</Form.Label>
+                                  <Form.Control
+                                      type="text"
+                                      placeholder="Enter Message"
+                                      value={this.state.memo}
+                                      onChange={(event) => this.setState({ memo: event.target.value })}
+                                />
+                              </Form.Group>
+
                               </Form.Row>
                               <Button variant="primary" type="submit">
                                   Transaction
@@ -294,24 +400,30 @@ render() {
 
                         <Form className="marginBuffer" onSubmit={this.onSubmitExternal}>
                                   
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formfromaccount">
-                                    <Form.Label>From Account Number</Form.Label> 
-                                        <select value="Select Account" onChange={this.handleChangeExternal}>
-                                        <option value="">--Select One--</option>
-                                        {this.state.accounts.map((account) => (
-                                <option value={account.accountnumber}>{account.fromAccountNumber}</option>
-                                        ))}
-                                        </select>
-                                    <Form.Control
-                                        required
-                                        type="number"
-                                        placeholder="Enter From AccountNumber"
-                                        value={this.state.fromAccountNumber}
-                                        onChange={(event) => this.setState({ fromAccountNumber: event.target.value })}
-                                    />
-                                </Form.Group>
-                                </Form.Row>
+                        <div className="form-group">
+                        <label> Choose Account Number </label>
+                        <select
+                          name="category"
+                          className="form-control"
+                          onChange={this.handleChangeExternal}
+                        >
+                        <option value="">
+                            {" "}
+                            Please choose an Account{" "}
+                        </option>
+                        {this.state.accounts.map((account) => {
+                        if (this.state.accountId === account.id) {
+                           return (
+                            <option value={account.id} selected="selected">
+                            {account.accountNumber}{" "}
+                        </option>
+                      );
+                    } else {
+                      return <option value={account.id}> {account.accountNumber} </option>;
+                    }
+                  })}
+                </select>
+              </div>
                                 
                                 <div className="form-group">
                                     <label> Choose Account Holder </label>
@@ -325,38 +437,24 @@ render() {
                                         Please choose an Account{" "}
                                     </option>
                                 {this.state.externalPayees.map((payee) => {
-                                    if (this.state.toAccountNumber === payee.accountNumber) {
+                                    if (this.state.toExternalPayeeId === payee.id) {
                                        return (
-                                        <option value={payee.accountNumber} selected="selected">
+                                        <option value={payee.id} selected="selected">
                                         {payee.accountHolderName}{" "}
                                     </option>
                                   );
                                 } else {
-                                  return <option value={payee.accountNumber}> {payee.accountHolderName} </option>;
+                                  return <option value={payee.id}> {payee.accountHolderName} </option>;
                                 }
                               })}
                             </select>
                           </div>
-
-                            <Form.Row>
-                            <Form.Group as={Col} controlId="formtoaccount">
-                                                <Form.Label>Account Number</Form.Label> 
-                                                   
-                                                <Form.Control
-                                                    required
-                                                    readOnly
-                                                    type="text"
-                                                    value={this.state.toAccountNumber}
-                                                    
-                                                />
-                                            </Form.Group>
-                            </Form.Row>
                             <Form.Row>
                               <Form.Group as={Col} controlId="formtransaction">
                                   <Form.Label>Transaction</Form.Label>
                                   <select value="Select Transaction" onChange={this.handleChangeTransactionTypeExternal}>
                                           <option value="">--Select One--</option>
-                                          <option value="ONE-TIME">One-Time</option>
+                                          <option value="ONE_TIME">One-Time</option>
                                           <option value="DAILY">DAILY</option>
                                           <option value="WEEKLY">WEEKLY</option>
                                           <option value="MONTHLY">MONTHLY</option>
@@ -366,12 +464,12 @@ render() {
                                       required
                                       type="text"
                                       placeholder="Transaction Type"
-                                      value={this.state.transactionType}
-                                      onChange={(event) => this.setState({ transactionType: event.target.value })}
+                                      value={this.state.frequency}
+                                      onChange={(event) => this.setState({ frequency: event.target.value })}
                                 />
                               </Form.Group>
 
-                              {this.state.transactionType !== "ONE-TIME" && this.state.transactionType !== "" ? (
+                              {this.state.frequency !== "ONE_TIME" && this.state.frequency !== "" ? (
                                 <>
                                 <Form.Row>
                                   <Form.Group as={Col} controlId="formstartdate">
@@ -401,8 +499,8 @@ render() {
                                       required
                                       type="text"
                                       placeholder="Operation Type"
-                                      value={this.state.operationType}
-                                      onChange={(event) => this.setState({ operationType: event.target.value })}
+                                      value={this.state.operationsType}
+                                      onChange={(event) => this.setState({ operationsType: event.target.value })}
                                 />
                               </Form.Group>
                               </Form.Row>
@@ -414,12 +512,21 @@ render() {
                                     required
                                     type="number"
                                     placeholder="Enter Amount"
-                                    value={this.state.amount}
-                                    onChange={(event) => this.setState({ amount: event.target.value })}
+                                    value={this.state.txnAmount}
+                                    onChange={(event) => this.setState({ txnAmount: event.target.value })}
                               />
                             </Form.Group>
+                            <Form.Group as={Col} controlId="formmemo">
+                                  <Form.Label>Memo</Form.Label>
+                                  <Form.Control
+                                      type="text"
+                                      placeholder="Enter Message"
+                                      value={this.state.memo}
+                                      onChange={(event) => this.setState({ memo: event.target.value })}
+                                />
+                              </Form.Group>
                             </Form.Row>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" onClick>
                                 Transaction
                             </Button>
                         </Form>
@@ -439,5 +546,5 @@ function mapStateToProps({ accounts,externalPayees }) {
 }
 
 export default connect(mapStateToProps, {
-  getAccounts, getExternalPayees
+  getAccounts, getExternalPayees, saveExternalReccurTxn, saveReccurTxn, saveOneTimeTxn, saveExternalOneTimeTxn
 })(NewTransaction);

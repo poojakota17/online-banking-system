@@ -59,12 +59,12 @@ public class TransactionController {
 	}
 
 	@PostMapping("/external_transaction")
-	public ExternalTransactionTemplate save(@RequestParam String fromAccountId, @RequestParam String toAccountNumber, @RequestBody ExternalTransactionTemplate externalTransactionTemplate){
-		return externalTransactionTemplateService.save(externalTransactionTemplate, fromAccountId, toAccountNumber);
+	public ExternalTransactionTemplate save(@RequestParam String fromAccountId, @RequestParam String toExternalPayeeId, @RequestBody ExternalTransactionTemplate externalTransactionTemplate){
+		return externalTransactionTemplateService.save(externalTransactionTemplate, fromAccountId, toExternalPayeeId);
 	}
 
 	@PostMapping("/one_time_external")
-	public void saveOneTimeExternalTransaction(@RequestBody ExternalTransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam String toAccountNumber){
-		externalTransactionTemplateService.saveOnetimeExternalTransaction(transactionTemplate, fromAccountId, toAccountNumber);
+	public void saveOneTimeExternalTransaction(@RequestBody ExternalTransactionTemplate transactionTemplate, @RequestParam String fromAccountId, @RequestParam String toExternalPayeeId){
+		externalTransactionTemplateService.saveOnetimeExternalTransaction(transactionTemplate, fromAccountId, toExternalPayeeId);
 	}
 }

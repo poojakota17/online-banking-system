@@ -7,3 +7,7 @@ export const GET_EXT_PAYEES = "GET_EXT_PAYEES";
 export const GET_USERS = "GET_USERS";
 export const GET_ALL_ACCOUNTS = "GET_ALL_ACCOUNTS";
 export const SAVE_ACCOUNT = "SAVE_ACCOUNT";
+export const SAVE_ONE_TIME_TXN = "SAVE_ONE_TIME_TXN";
+export const SAVE_ONE_TIME_TXN_EXT = "SAVE_ONE_TIME_TXN_EXT";
+export const SAVE_RECCUR_TXN = "SAVE_RECCUR_TXN";
+export const SAVE_RECCUR_TXN_EXT = "SAVE_RECCUR_TXN_EXT";
