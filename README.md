@@ -1,5 +1,14 @@
 # Team-project-artemis - Online Banking System
 
+# Feature Set
+<li>Add new accounts - Checking, Savings</li>
+<li>Close existing accounts</li>
+<li>Transfer between accounts - one time or recurring</li>
+<li>Set up recurring or one-time Bill payment for external payees</li>
+<li>View and search Transactions - for credits/debits/checks/fees - up to  last 18 months</li>
+<li>
+(Admin only) - Add transactions - such as manual refunds on fees</li>
+
 ## Local Development
 ### How to run the application
 ````
