@@ -1,4 +1,4 @@
-# Team-project-artemis - Online Banking System
+# Online Banking System
 ### Two Actors
  <li>Bankers</li>
  <li>Users</li>
